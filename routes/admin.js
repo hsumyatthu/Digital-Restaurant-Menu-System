@@ -69,11 +69,7 @@ router.post('/modify', upload.single('uploadImg'), function(req, res, next) {
   };
     Menu.findByIdAndUpdate(req.body.menu_id, {$set: update}, function(err, menu) {
       if(err) throw (err);
-      res.json({
-        status: true,
-        msg: 'success',
-        id: menu
-      });
+      res.redirect('/admin/detail/' + menu._id);
     });
   });
 

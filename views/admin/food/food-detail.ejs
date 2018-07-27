@@ -89,14 +89,13 @@
                         <h2>Additional Info: </h2>
                         <%= menu.additionalInfo %>
                       </div>
-
                     </div>
                     </div>
-                  </div>
-
+                  </div>  &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp              
                   <div class="text-center">
                     <button type="button" class="btn btn-lg btn-primary" id="btnModify">MODIFY</button>&nbsp&nbsp&nbsp
-                    <button type="button" class="btn btn-lg btn-danger" id="btnDelete">DELETE</button>
+                    <button type="button" class="btn btn-lg btn-danger" id="btnDelete">DELETE</button>&nbsp&nbsp&nbsp
+                    <button type="button" class="btn btn-lg btn-success" id="btnList">Go To List</button>
                   </div>
                 </div>
               </div>
@@ -154,7 +153,11 @@
         if(confirm('Are you sure?'))
         location.href= '/admin/delete/'+'<%= menu._id %>';
       });
-    </script>
 
+      $('#btnList').click(function () {
+        location.href = '/admin/foodlist';
+      });
+
+    </script>
   </body>
 </html>

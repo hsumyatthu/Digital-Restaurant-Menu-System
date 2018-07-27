@@ -58,14 +58,12 @@
 
             <div class="x_content">
               <div class="row">
-
-                <div class="clearfix"></div>
                 <% for(var i=0; i< menu.length; i++){ %>
-
+                <div class="clearfix">
                 <div class="col-md-8 col-sm-8 col-xs-10 profile_details">
                   <div class="well profile_view">
                     <div class="col-sm-12">
-                      <div class="left col-xs-7">
+                      <div class="left col-xs-6">
                         <h5 class="name"><strong>Name:</strong> <%= menu[i].fname %></h5>
                         <h5 class="cat"><strong>Category:</strong> <%= menu[i].category %></h5>
                         <h5><p><strong>Price:</strong> <%= menu[i].price %> </p></h5>
@@ -89,17 +87,15 @@
                         </p>
                       </div>
                       <div class="col-xs-12 col-sm-6 emphasis" >
-                        <button type="button" class="btn btn-success btn-xs"> <i class="fa fa-user">
-                            </i> <i class="fa fa-comments-o"></i> </button>
                         <a href="/admin/detail/<%= menu[i]._id %>"><button type="button"  class="btn btn-primary btn-xs" >
-                            <i class="fa fa-user"> </i>Detail View
+                            <i class="fa fa-cutlery">&nbsp&nbsp </i>Detail View
                         </button></a>
                       </div>
                     </div>
                   </div>
                 </div>
                 <% } %>
-
+                </div>
               </div>
             </div>
           </div>
