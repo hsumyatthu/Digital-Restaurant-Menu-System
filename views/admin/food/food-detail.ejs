@@ -1,0 +1,160 @@
+"/images<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Gentelella Alela! | </title>
+
+    <!-- Bootstrap -->
+    <link href="/vendor/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="/vendor/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <!-- NProgress -->
+    <link href="/vendor/vendors/nprogress/nprogress.css" rel="stylesheet">
+    <!-- iCheck -->
+    <link href="/vendor/vendors/iCheck/skins/flat/green.css" rel="stylesheet">
+
+    <!-- Custom Theme Style -->
+    <link href="/build/css/custom.min.css" rel="stylesheet">
+  </head>
+
+  <% include ../../partial/admin-sidebar.ejs %>
+        <!-- /top navigation -->
+
+        <!-- page content -->
+        <div class="right_col" role="main">
+          <div class="">
+              <div class="title_right">
+                <div class="col-md-3 col-sm-3 col-xs-10 form-group pull-right top_search">
+                  <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Search for...">
+                    <span class="input-group-btn">
+                      <button class="btn btn-default" type="button">Go!</button>
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+            <div class="clearfix"></div>
+            <div class="row">
+              <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                  <div class="x_title">
+                    <h2>Food Detail View </h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                      </li>
+                      <li><a class="close-link"><i class="fa fa-close"></i></a>
+                      </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                  </div>
+                  <div class="x_content">
+                    <div class="row">
+
+                      <div class="clearfix"></div>
+                  <div class="col-md-7 col-sm-7 col-xs-12">
+                      <div class="product-image">
+                      <img src="<%= menu.imgUrl %>" alt="" class="img-cause img-responsive">
+                      </div>
+
+                    </div>
+                    <div class="col-md-5 col-sm-5 col-xs-12" style="border:0px solid #e5e5e5;">
+                      <div>
+                        <h2>Name:</h2>
+                        <%= menu.fname %>
+                      </div><br>
+
+                      <div>
+                        <h2>Category: </h2>
+                        <%= menu.category %>
+                      </div><br>
+                      <div>
+                        <h2>Price: </h2>
+                        <%= menu.price %>
+                      </div><br>
+                      <div>
+                        <h2>Brief: </h2>
+                        <%= menu.brief %>
+                      </div><br>
+                      <div>
+                        <h2>Description: </h2>
+                        <%= menu.description %>
+                      </div><br>
+                      <div>
+                        <h2>Additional Info: </h2>
+                        <%= menu.additionalInfo %>
+                      </div>
+
+                    </div>
+                    </div>
+                  </div>
+
+                  <div class="text-center">
+                    <button type="button" class="btn btn-lg btn-primary" id="btnModify">MODIFY</button>&nbsp&nbsp&nbsp
+                    <button type="button" class="btn btn-lg btn-danger" id="btnDelete">DELETE</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- /page content -->
+
+        <!-- footer content -->
+        <footer>
+          <div class="pull-right">
+            Gentelella - Bootstrap Admin Template by <a href="https://colorlib.com">Colorlib</a>
+          </div>
+          <div class="clearfix"></div>
+        </footer>
+        <!-- /footer content -->
+      </div>
+    </div>
+
+    <!-- jQuery -->
+    <script src="/vendor/vendors/jquery/dist/jquery.min.js"></script>
+    <!-- Bootstrap -->
+    <script src="/vendor/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
+    <!-- FastClick -->
+    <script src="/vendor/vendors/fastclick/lib/fastclick.js"></script>
+    <!-- NProgress -->
+    <script src="/vendor/vendors/nprogress/nprogress.js"></script>
+
+    <!-- Custom Theme Scripts -->
+    <script src="/build/js/custom.min.js"></script>
+
+    <script type="text/javascript">
+
+    $(function() {
+      function readURL(input) {
+        if (input.files && input.files[0]) {
+          var reader = new FileReader();
+          reader.onload = function(e) {
+            $('#photo').attr('src', e.target.result);
+          }
+          reader.readAsDataURL(input.files[0]);
+        }
+      }
+      $("#uploadImg").change(function() {
+        readURL(this);
+      });
+    });
+
+      $('#btnModify').click(function () {
+        location.href = '/admin/modify/'+'<%=menu._id%>';
+      });
+
+      $('#btnDelete').click(function () {
+        if(confirm('Are you sure?'))
+        location.href= '/admin/delete/'+'<%= menu._id %>';
+      });
+    </script>
+
+  </body>
+</html>

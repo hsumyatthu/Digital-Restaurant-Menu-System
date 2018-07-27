@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <!-- Meta, title, CSS, favicons, etc. -->
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Contact Form | Gentelella Alela! by Colorlib</title>
+
+  <!-- Bootstrap -->
+  <link href="/vendor/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Font Awesome -->
+  <link href="/vendor/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+  <!-- NProgress -->
+  <link href="/vendor/vendors/nprogress/nprogress.css" rel="stylesheet">
+
+  <!-- Custom Theme Style -->
+  <link href="/build/css/custom.min.css" rel="stylesheet">
+</head>
+
+<% include ../../partial/admin-sidebar.ejs %>
+  <!-- /top navigation -->
+
+  <!-- page content -->
+  <div class="right_col" role="main">
+    <div class="">
+      <div class="title_right">
+        <div class="col-md-3 col-sm-3 col-xs-10 form-group pull-right top_search">
+          <div class="input-group">
+            <input type="text" class="form-control" placeholder="Search for...">
+            <span class="input-group-btn">
+            <button class="btn btn-default" type="button">Go!</button>
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <div class="clearfix"></div>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="x_panel">
+
+            <div class="x_title">
+
+              <h2>Food List</h2>
+              <ul class="nav navbar-right panel_toolbox">
+                <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                </li>
+
+                <li><a class="close-link"><i class="fa fa-close"></i></a>
+                </li>
+              </ul>
+              <div class="clearfix"></div>
+            </div>
+
+            <div class="x_content">
+              <div class="row">
+
+                <div class="clearfix"></div>
+                <% for(var i=0; i< menu.length; i++){ %>
+
+                <div class="col-md-8 col-sm-8 col-xs-10 profile_details">
+                  <div class="well profile_view">
+                    <div class="col-sm-12">
+                      <div class="left col-xs-7">
+                        <h5 class="name"><strong>Name:</strong> <%= menu[i].fname %></h5>
+                        <h5 class="cat"><strong>Category:</strong> <%= menu[i].category %></h5>
+                        <h5><p><strong>Price:</strong> <%= menu[i].price %> </p></h5>
+                        <h5 class="brief"><strong>Brief:</strong> <%= menu[i].brief %></h5>
+                        <h5><p><strong>Descirption:</strong> <%= menu[i].description %>  </p></h5>
+                        <h5><p><strong>Additional Info:</strong> <%= menu[i].additionalInfo %>  </p></h5>
+                      </div>
+                      <div class="right col-xs-5 text-center">
+                        <img src="<%= menu[i].imgUrl %>" alt="" class="img-cause img-responsive">
+                      </div>
+                    </div>
+                    <div class="col-xs-12 bottom text-center">
+                      <div class="col-xs-12 col-sm-6 emphasis">
+                        <p class="ratings">
+                          <a>4.0</a>
+                          <a href="#"><span class="fa fa-star"></span></a>
+                          <a href="#"><span class="fa fa-star"></span></a>
+                          <a href="#"><span class="fa fa-star"></span></a>
+                          <a href="#"><span class="fa fa-star"></span></a>
+                          <a href="#"><span class="fa fa-star-o"></span></a>
+                        </p>
+                      </div>
+                      <div class="col-xs-12 col-sm-6 emphasis" >
+                        <button type="button" class="btn btn-success btn-xs"> <i class="fa fa-user">
+                            </i> <i class="fa fa-comments-o"></i> </button>
+                        <a href="/admin/detail/<%= menu[i]._id %>"><button type="button"  class="btn btn-primary btn-xs" >
+                            <i class="fa fa-user"> </i>Detail View
+                        </button></a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <% } %>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- /page content -->
+
+  <!-- footer content -->
+  <footer>
+    <div class="pull-right">
+      Gentelella - Bootstrap Admin Template by <a href="https://colorlib.com">Colorlib</a>
+    </div>
+    <div class="clearfix"></div>
+  </footer>
+  <!-- /footer content -->
+  </div>
+  </div>
+
+  <!-- jQuery -->
+  <script src="/vendor/vendors/jquery/dist/jquery.min.js"></script>
+  <!-- Bootstrap -->
+  <script src="/vendor/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
+  <!-- FastClick -->
+  <script src="/vendor/vendors/fastclick/lib/fastclick.js"></script>
+  <!-- NProgress -->
+  <script src="/vendor/vendors/nprogress/nprogress.js"></script>
+
+  <!-- Custom Theme Scripts -->
+  <script src="/build/js/custom.min.js"></script>
+  </body>
+
+</html>

@@ -3,10 +3,12 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+var mongoose = require('mongoose');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var customerRouter = require('./routes/customer');
+var adminRouter = require('./routes/admin');
 
 var app = express();
 
@@ -20,9 +22,16 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+
+//set up mongoose connection
+mongoose.connect('mongodb://127.0.0.1/menudb');
+var db = mongoose.connection;
+db.on('error', console.error.bind(console, 'MongoDBmconnection error:'));
+
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/customer', customerRouter);
+app.use('/admin', adminRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
