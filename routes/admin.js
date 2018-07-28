@@ -1,14 +1,28 @@
 var express = require('express');
 var router = express.Router();
 var Menu = require('../models/Food');
+var User = require('../models/User');
 var multer = require('multer');
 var Category = require('../models/Category');
+var flash = require('express-flash');
+var cookieParser = require('cookie-parser');
 var upload = multer({
   dest: 'public/images/uploads'
 });
 
+var auth = function(req, res, next) {
+  if (req.session.user) {
+    return next();
+  } else{
+    req.flash('warn','You need to signin');
+    console.log('request path',req.path);
+    req.flash('forward', '/admin'+req.path);
+    res.redirect('/signup');
+    }
+};
 /* GET home page. */
 router.get('/', function(req, res, next) {
+  console.log(req.session.user);
   res.render('admin/index', { title: 'Express' });
 });
 

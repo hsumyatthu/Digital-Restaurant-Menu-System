@@ -1,5 +1,6 @@
 var mongoose = require('mongoose'); //mongodb module
 var dateformat = require('dateformat');
+var bcrypt = require('bcrypt-nodejs');
 //Define a schama
 var Schema = mongoose.Schema;
 var UserSchema = new Schema({
@@ -34,6 +35,10 @@ var UserSchema = new Schema({
 });
 
 //hashing a password before saving it to the database
+UserSchema.pre('save', function (next) {
+  this.password = bcrypt.hashSync(this.password, bcrypt.genSaltSync(8),null);
+  next();
+});
 
 UserSchema.virtual('updated_date').get(function () {
   return dateformat(this.updated, 'dd/mm/yyyy HH:MM');

@@ -30,13 +30,13 @@
       <div class="login_wrapper">
         <div class="animate form login_form">
           <section class="login_content">
-            <form action="/signin" method="post" data-parsley-validate>
+            <form action="/signin" method="post" name="frmIn" data-parsley-validate>
               <h1>Sign In</h1>
               <div>
-                <input type="text" class="form-control" placeholder="Username" required>
+                <input type="email" id="emailIn" class="form-control" name="emailIn" placeholder="Email" required>
               </div>
               <div>
-                <input type="password" class="form-control" placeholder="Password" required>
+                <input type="password" id="passwordIn" class="form-control" name="passwordIn" placeholder="Password" required>
               </div>
               <div class="row">
                   <div class="col-xs-8 p-t-5">
@@ -67,19 +67,19 @@
 
         <div id="register" class="animate form registration_form">
           <section class="login_content">
-            <form  action="/signin" method="post" data-parsley-validate>
+            <form  action="/signup" method="post" name="frm" data-parsley-validate>
               <h1>Sign Up</h1>
               <div>
-                <input type="text" class="form-control" placeholder="Username" required>
+                <input type="text" id="name" class="form-control" name="name" placeholder="Username" required>
               </div>
               <div>
-                <input type="email" class="form-control" placeholder="Email" required>
+                <input type="email" id="email" class="form-control" name="email" placeholder="Email" required>
               </div>
               <div>
-                <input type="password" class="form-control" placeholder="Password" required>
+                <input type="password" id="password" class="form-control" name="password" placeholder="Password" required>
               </div>
               <div>
-                <a class="btn btn-default submit" href="/signin">Submit</a>
+                <button class="btn btn-default submit" type="submit">Submit</button>
               </div>
 
               <div class="clearfix"></div>
@@ -102,4 +102,38 @@
       </div>
     </div>
   </body>
+  <script src="/vendor/vendors/jquery/dist/jquery.min.js"></script>
+  <script src="/javascripts/js.cookie.js" charset="utf-8"></script>
+  <script type="text/javascript">
+  $(function(){
+
+    frmIn.onsubmit = function(){
+      console.log('submit');
+      if(frmIn.rememberme.checked){
+        console.log('checked');
+      Cookies.set('emailIn', frmIn.emailIn.value, { expires: 7 });
+      }else{
+        Cookies.remove("emailIn");
+      }
+    }
+    if(Cookies.get("emailIn")){
+      frmIn.emailIn.value = Cookies.get("emailIn");
+      frmIn.rememberme.checked = true;
+    }
+  });
+
+  $('#email').blur(function () {
+    console.log('call back');
+    var data = { email: $('#email').val()};
+    if(data.email == '') return ;
+    $.ajax({url: "/signup/duplicate", data:data, type: 'POST', success: function (result) {
+      if (result.status == false) {
+        alert(result.msg);
+        $('#email').val('');
+        $('#email').focus();
+      }
+    }});
+  });
+
+</script>
 </html>

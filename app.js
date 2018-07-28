@@ -4,6 +4,8 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var mongoose = require('mongoose');
+var session = require('express-session');
+var flash = require('express-flash');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -27,6 +29,21 @@ app.use(express.static(path.join(__dirname, 'public')));
 mongoose.connect('mongodb://127.0.0.1/menudb');
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDBmconnection error:'));
+
+//session : before routing
+app.use(session({
+      secret: 'BN31@~1!/y8&^*@$%<<,',// any string for security
+      resave: false,
+      saveUninitialized : true
+}));
+
+app.use(flash()); // after cookie, session
+app.use(function (req, res, next) {
+  res.locals.user = req.session.user;
+  res.locals.active = req.path;
+  console.log('user path', req.path);
+  next();
+});
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
