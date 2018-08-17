@@ -59,6 +59,7 @@
                     <th>Name</th>
                     <th>Inserted</th>
                     <th>Updated</th>
+                    <th>Function</th>
                   </tr>
                 </thead>
 
@@ -69,6 +70,7 @@
                       <td><%= cat[i].name %></td>
                       <td><%= cat[i].updated_date %></td>
                       <td><%= cat[i].inserted_date %></td>
+                      <td><button type="button" onclick="del('<%= cat[i]._id %>')" name="button">Delete</button></td>
                     </tr>
                   <% } %>
                   </tbody>
@@ -117,7 +119,13 @@
 
   <!-- Custom Theme Scripts -->
   <script src="/build/js/custom.min.js"></script>
-
   </body>
+  <script type="text/javascript">
 
+    function del(id) {
+      if(confirm('Are you sure?'))
+      location.href= '/admin/deleteCat/'+id;
+    }
+
+  </script>
 </html>

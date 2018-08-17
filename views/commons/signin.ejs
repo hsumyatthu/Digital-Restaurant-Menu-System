@@ -32,6 +32,17 @@
           <section class="login_content">
             <form action="/signin" method="post" name="frmIn" data-parsley-validate>
               <h1>Sign In</h1>
+              <% if(locals.messages.warn){%>
+                <div class="alert alert-warning alert-dismissible" role="alert" style="width:100%;">
+                    <strong>Warning!</strong><br><%=messages.warn%>
+                </div>
+                <%}%>
+
+                <% if(locals.messages.success){%>
+                  <div class="alert alert-success alert-dismissible" role="alert" style="width:100%;">
+                      <strong>Success!</strong><br><%=messages.success%>
+                  </div>
+                  <%}%>
               <div>
                 <input type="email" id="emailIn" class="form-control" name="emailIn" placeholder="Email" required>
               </div>
@@ -58,7 +69,7 @@
                 <br />
 
                 <div>
-                  <h1><i class="fa fa-tree"></i>Village Garden</h1>
+                  <h1><i class="fa fa-tree"></i>Restaurant Garden</h1>
                 </div>
               </div>
             </form>
@@ -86,14 +97,14 @@
 
               <div class="separator">
                 <p class="change_link">Already a member?
-                  <a href="#signin" class="to_register"> Sign In </a>
+                  <a href="/signin" class="to_register"> Sign In </a>
                 </p>
 
                 <div class="clearfix"></div>
                 <br />
 
                 <div>
-                  <h1><i class="fa fa-tree"></i> Village Garden</h1>
+                  <h1><i class="fa fa-tree"></i> Restaurant Garden</h1>
                 </div>
               </div>
             </form>
@@ -106,7 +117,6 @@
   <script src="/javascripts/js.cookie.js" charset="utf-8"></script>
   <script type="text/javascript">
   $(function(){
-
     frmIn.onsubmit = function(){
       console.log('submit');
       if(frmIn.rememberme.checked){

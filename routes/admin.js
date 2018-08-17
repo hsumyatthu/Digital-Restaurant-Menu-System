@@ -120,4 +120,19 @@ router.post('/assignfoodCat', function(req, res, next) {
   });
 });
 
+router.get('/deleteCat/:id', function(req, res, next){
+  Category.findByIdAndRemove(req.params.id, function(err, cat){
+    if(err) throw err;
+    res.redirect('/admin/foodCatlist');
+  });
+});
+
+router.post('/duplicateCat', function(req, res, next){
+  Category.findOne({ name: req.body.cat_name}, function(err,rtn){
+    if(err) throw err;
+    if(rtn != null) res.json({ status: false, msg: 'Duplicate category name!!!'});
+    else res.json({ status: true });
+  });
+});
+
 module.exports = router;

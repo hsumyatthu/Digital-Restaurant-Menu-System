@@ -51,6 +51,7 @@ router.post('/signup', function(req, res, next) {
   user.password = req.body.password;
   user.save(function (err, rtn) {
     if(err) throw err;
+    req.flash( 'success', 'Registration successful.' );
     res.redirect('/signin');
   });
 });
@@ -58,9 +59,14 @@ router.post('/signup', function(req, res, next) {
 router.post('/signup/duplicate', function(req, res, next){
   User.findOne({ email: req.body.email}, function(err,rtn){
     if(err) throw err;
-    if(rtn != null) res.json({ status: false, msg: 'Duplicate user id!!!'});
+    if(rtn != null) res.json({ status: false, msg: 'Duplicate owner email!!!'});
     else res.json({ status: true });
   });
+});
+
+router.get('/signout',function (req,res) {
+  req.session.destroy();
+  res.redirect('/');
 });
 
 module.exports = router;
