@@ -44,29 +44,48 @@ router.post('/signin', function(req, res, next) {
   });
 });
 
-router.post('/signup', function(req, res, next) {
-  var user = new User();
-  user.name = req.body.name;
-  user.email = req.body.email;
-  user.password = req.body.password;
-  user.save(function (err, rtn) {
-    if(err) throw err;
-    req.flash( 'success', 'Registration successful.' );
-    res.redirect('/signin');
-  });
-});
+// router.post('/signup', function(req, res, next) {
+//   var user = new User();
+//   user.name = req.body.name;
+//   user.email = req.body.email;
+//   user.password = req.body.password;
+//   user.save(function (err, rtn) {
+//     if(err) throw err;
+//     req.flash( 'success', 'Registration successful.' );
+//     res.redirect('/signin');
+//   });
+// });
 
-router.post('/signup/duplicate', function(req, res, next){
-  User.findOne({ email: req.body.email}, function(err,rtn){
-    if(err) throw err;
-    if(rtn != null) res.json({ status: false, msg: 'Duplicate owner email!!!'});
-    else res.json({ status: true });
-  });
-});
+// router.post('/signup/duplicate', function(req, res, next){
+//   User.findOne({ email: req.body.email}, function(err,rtn){
+//     if(err) throw err;
+//     if(rtn != null) res.json({ status: false, msg: 'Duplicate owner email!!!'});
+//     else res.json({ status: true });
+//   });
+// });
 
 router.get('/signout',function (req,res) {
   req.session.destroy();
   res.redirect('/');
 });
+
+router.get('/login', function(req, res, next) {
+    res.render('commons/login', { title: 'Log In' });
+});
+
+// router.post('/login', function(req, res, next) {
+//   var user = new User();
+//   User.findOne({ id: req.body.email}, function (err,user){
+//     if(err) throw err;
+//     if( user == null || !User.compare( req.body.password, user.password )) {
+//     req.flash( 'warn', 'ID not exists or password not matched!!' );
+//     res.redirect('/login');
+//   }else{
+//     req.session.user = { name: user.name, email: user.email, id: user._id };
+//     res.redirect('/customer/home');
+//   }
+//   });
+// });
+
 
 module.exports = router;

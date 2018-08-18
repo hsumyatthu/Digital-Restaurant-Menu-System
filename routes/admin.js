@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var Menu = require('../models/Food');
 var User = require('../models/User');
+var Table = require('../models/Table');
 var multer = require('multer');
 var Category = require('../models/Category');
 var flash = require('express-flash');
@@ -132,6 +133,29 @@ router.post('/duplicateCat', function(req, res, next){
     if(err) throw err;
     if(rtn != null) res.json({ status: false, msg: 'Duplicate category name!!!'});
     else res.json({ status: true });
+  });
+});
+
+router.get('/assigntb', function(req, res, next) {
+  res.render('admin/table/assign-table', { title: 'Express' });
+});
+
+router.post('/assigntb', function(req, res, next) {
+  var table = new Table();
+  table.id = req.body.id;
+  table.password = req.body.password;
+  table.tnumber = req.body.tnumber;
+
+  table.save(function(err,rtn){
+    if (err)throw err;
+    res.redirect('/admin/tblist');
+  });
+});
+
+router.get('/tblist', function(req, res, next) {
+  Table.find(function(err,rtn){
+    if(err) throw err;
+    res.render('admin/table/table-list', { table: rtn });
   });
 });
 

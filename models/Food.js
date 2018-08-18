@@ -31,7 +31,7 @@ var FoodSchema = new Schema({  //define data fields
       required: true,
       trim: true,
   },
-  
+
   updated: {
       type: Date,
       default: Date.now
