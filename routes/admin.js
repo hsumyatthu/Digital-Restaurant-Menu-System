@@ -159,4 +159,19 @@ router.get('/tblist', function(req, res, next) {
   });
 });
 
+router.get('/deleteTb/:id', function(req, res, next){
+  Table.findByIdAndRemove(req.params.id, function(err, tb){
+    if(err) throw err;
+    res.redirect('/admin/tblist');
+  });
+});
+
+router.post('/duplicateTb', function(req, res, next){
+  Table.findOne({$or: [{tnumber: req.body.tnumber}, {id: req.body.tid}] }, function(err,rtn){
+    if(err) throw err;
+    if(rtn != null) res.json({ status: false, msg: 'Duplicate Table Number & ID!!!'});
+    else res.json({ status: true });
+  });
+});
+
 module.exports = router;

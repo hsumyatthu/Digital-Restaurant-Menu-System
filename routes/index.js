@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var User = require('../models/User');
 var Menu = require('../models/Food');
+var Table = require('../models/Table');
 var multer = require('multer');
 var Category = require('../models/Category');
 var flash = require('express-flash');
@@ -17,7 +18,7 @@ var auth = function(req, res, next) {
     req.flash('warn','You need to signin');
     console.log('request path',req.path);
     req.flash('forward', req.path);
-    res.redirect('/signup');
+    res.redirect('/signin');
     }
 };
 
@@ -73,19 +74,20 @@ router.get('/login', function(req, res, next) {
     res.render('commons/login', { title: 'Log In' });
 });
 
-// router.post('/login', function(req, res, next) {
-//   var user = new User();
-//   User.findOne({ id: req.body.email}, function (err,user){
-//     if(err) throw err;
-//     if( user == null || !User.compare( req.body.password, user.password )) {
-//     req.flash( 'warn', 'ID not exists or password not matched!!' );
-//     res.redirect('/login');
-//   }else{
-//     req.session.user = { name: user.name, email: user.email, id: user._id };
-//     res.redirect('/customer/home');
-//   }
-//   });
-// });
+router.post('/login', function(req, res, next) {
+  Table.findOne({ id: req.body.id}, function (err,table){
+    if(err) throw err;
+    if( table == null || !Table.compare( req.body.password, table.password )) {
+    req.flash( 'warn', 'ID not exists or password not matched!!' );
+    res.redirect('/login');
+  }else{
+    var table_cookie = {name: table.tnumber, id: table._id };
+    res.cookie('table_cookie', table_cookie);
+    req.session.table = { name: table.tnumber, id: table._id };
+    res.redirect('/customer/home');
+  }
+  });
+});
 
 
 module.exports = router;

@@ -61,6 +61,7 @@
                           <th>#</th>
                           <th>ID</th>
                           <th>Table Number</th>
+                          <th>Function</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -69,6 +70,7 @@
                           <th scope="row"><%= i+1 %></th>
                           <td><%= table[i].id %></td>
                           <td><%= table[i].tnumber %></td>
+                          <td><button type="button" onclick="del('<%= table[i]._id %>')" name="button">Delete</button></td>
                         </tr>
                         <% } %>
                       </tbody>
@@ -102,4 +104,11 @@
     <!-- Custom Theme Scripts -->
     <script src="/build/js/custom.min.js"></script>
   </body>
+  <script type="text/javascript">
+  function del(id) {
+    if(confirm('Are you sure?'))
+    location.href= '/admin/deleteTb/'+id;
+  }
+
+  </script>
 </html>

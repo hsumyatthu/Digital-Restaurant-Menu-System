@@ -47,10 +47,10 @@
             </div>
             <%}%>
         <div class="form-group">
-            <input type="text" id="email" class="form-control" placeholder="ID" required="required">
+            <input type="text" id="id" name="id" class="form-control" placeholder="ID" required="required">
         </div>
         <div class="form-group">
-            <input type="password" id="password" class="form-control" placeholder="Password" required="required">
+            <input type="password" id="password" name="password" class="form-control" placeholder="Password" required="required">
         </div>
         <div class="form-group">
             <button type="submit" class="btn btn-primary btn-block">Log in</button>
@@ -72,13 +72,13 @@ $(function(){
     console.log('submit');
     if(frm.rememberme.checked){
       console.log('checked');
-    Cookies.set('email', frm.email.value, { expires: 7 });
+    Cookies.set('id', frm.id.value, { expires: 7 });
     }else{
-      Cookies.remove("email");
+      Cookies.remove("id");
     }
   }
-  if(Cookies.get("email")){
-    frm.email.value = Cookies.get("email");
+  if(Cookies.get("id")){
+    frm.id.value = Cookies.get("id");
     frm.rememberme.checked = true;
   }
 });
