@@ -70,7 +70,7 @@ router.get('/signout',function (req,res) {
   res.redirect('/');
 });
 
-router.get('/login', function(req, res, next) {
+router.get('/login', auth, function(req, res, next) {
     res.render('commons/login', { title: 'Log In' });
 });
 

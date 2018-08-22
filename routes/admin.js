@@ -18,7 +18,7 @@ var auth = function(req, res, next) {
     req.flash('warn','You need to signin');
     console.log('request path',req.path);
     req.flash('forward', '/admin'+req.path);
-    res.redirect('/signup');
+    res.redirect('/signin');
     }
 };
 /* GET home page. */
@@ -27,32 +27,32 @@ router.get('/', function(req, res, next) {
   res.render('admin/index', { title: 'Express' });
 });
 
-router.get('/addfood', function(req, res, next) {
+router.get('/addfood', auth, function(req, res, next) {
   Category.find(function(err,rtn){
     if(err)  throw err;
     res.render('admin/food/add-food', { cat: rtn });
   });
 });
 
-router.get('/foodlist', function(req, res, next) {
+router.get('/foodlist', auth, function(req, res, next) {
   Menu.find(function(err,rtn){
     if(err) throw err;
       res.render('admin/food/food-list', { menu: rtn });
   });
 });
 
-router.get('/foodCatlist', function(req, res, next) {
+router.get('/foodCatlist', auth, function(req, res, next) {
   Category.find(function(err,rtn){
     if(err) throw err;
     res.render('admin/food/foodCat-list', { cat: rtn });
   });
 });
 
-router.get('/assignfoodCat', function(req, res, next) {
+router.get('/assignfoodCat', auth, function(req, res, next) {
   res.render('admin/food/assign-foodCat', { title: 'Express' });
 });
 
-router.get('/detail/:id', function(req, res, next) {
+router.get('/detail/:id', auth, function(req, res, next) {
   Menu.findById({
     _id: req.params.id
   }, function(err, rtn) {
@@ -62,7 +62,7 @@ router.get('/detail/:id', function(req, res, next) {
   });
 });
 
-router.get('/modify/:id', function(req, res, next) {
+router.get('/modify/:id', auth, function(req, res, next) {
   Menu.findOne({_id:req.params.id}, function(err, rtn) {
     if(err) throw err;
     Category.find(function(err,cat){
@@ -136,7 +136,7 @@ router.post('/duplicateCat', function(req, res, next){
   });
 });
 
-router.get('/assigntb', function(req, res, next) {
+router.get('/assigntb', auth, function(req, res, next) {
   res.render('admin/table/assign-table', { title: 'Express' });
 });
 
@@ -152,7 +152,7 @@ router.post('/assigntb', function(req, res, next) {
   });
 });
 
-router.get('/tblist', function(req, res, next) {
+router.get('/tblist', auth, function(req, res, next) {
   Table.find(function(err,rtn){
     if(err) throw err;
     res.render('admin/table/table-list', { table: rtn });

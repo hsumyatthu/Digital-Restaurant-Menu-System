@@ -33,7 +33,7 @@
 </head>
 <body style="background-color: #E0FFFF;">
 <div class="login-form">
-    <form action="/login" method="post" name="frm">
+    <form action="/login" id="login" method="post" name="frm">
         <h2 class="text-center">Log in</h2>
         <% if(locals.messages.warn){%>
           <div class="alert alert-warning alert-dismissible" role="alert" style="width:100%;">
@@ -41,11 +41,11 @@
           </div>
           <%}%>
 
-          <% if(locals.messages.success){%>
+          <!-- <% if(locals.messages.success){%>
             <div class="alert alert-success alert-dismissible" role="alert" style="width:100%;">
                 <strong>Success!</strong><br><%=messages.success%>
             </div>
-            <%}%>
+            <%}%> -->
         <div class="form-group">
             <input type="text" id="id" name="id" class="form-control" placeholder="ID" required="required">
         </div>
@@ -68,6 +68,19 @@
 <script src="/javascripts/js.cookie.js" charset="utf-8"></script>
 <script type="text/javascript">
 $(function(){
+	// $('#login').validate({
+	// 		highlight: function (input) {
+	// 				console.log(input);
+	// 				$(input).parents('.form-line').addClass('error');
+	// 		},
+	// 		unhighlight: function (input) {
+	// 				$(input).parents('.form-line').removeClass('error');
+	// 		},
+	// 		errorPlacement: function (error, element) {
+	// 				$(element).parents('.input-group').append(error);
+	// 		}
+	// });
+
   frm.onsubmit = function(){
     console.log('submit');
     if(frm.rememberme.checked){
