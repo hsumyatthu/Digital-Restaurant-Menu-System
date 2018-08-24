@@ -28,7 +28,20 @@ router.get('/about', function(req, res, next) {
 router.get('/list', function(req, res, next) {
   Menu.find(function(err,rtn){
     if(err) throw err;
-  res.render('customer/food/food-list', { menu: rtn});
+    if(req.cookies.cart){
+      console.log('have',req.cookies.cart);
+      for(var i in rtn){
+        for(var j = 0; j< req.cookies.cart.items.length; j++){
+          if(req.cookies.cart.items[j].id == rtn[i]._id){
+            rtn[i].cart = true;
+            console.log('same');
+            break;
+          }
+        }
+      }
+    }
+    console.log(rtn);
+    res.render('customer/food/food-list', { menu: rtn});
   });
 });
 

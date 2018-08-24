@@ -189,12 +189,16 @@
 
 										<div class="block2-btn-addcart w-size1 trans-0-4">
 											<!-- Button -->
-
-											<button class="flex-c-m size1 bg4 bo-rad-23 hov1 s-text1 trans-0-4" id="btncart" onclick="cart('<%= menu[i]._id %>', '<%= menu[i].price %>', '<%= menu[i].fname %>')" >
+											<% if(menu[i].cart){ %>
+												<button class="flex-c-m size1 bg4 bo-rad-23 hov1 s-text1 trans-0-4" id="btncheck" onclick="checkout()" >
+													Checkout
+												</button>
+											<%}else{%>
+												<button class="flex-c-m size1 bg4 bo-rad-23 hov1 s-text1 trans-0-4" id="btncart" onclick="cart('<%= menu[i]._id %>', '<%= menu[i].price %>', '<%= menu[i].fname %>')" >
 												Add to Cart
 											</button>
-
-										</div>
+											<%}%>
+											</div>
 									</div>
 								</div>
 
@@ -318,6 +322,7 @@
 		$.ajax('/customer/addcart',{ method:'POST', data:{'id': id, 'price': price, 'name': fname},
 		success: function(){
 			swal("aa", "is added to cart !", "success");
+
 			location.href = '/customer/list';
 		},
 		error: function(err){
@@ -328,6 +333,11 @@
 
 		}
 	});
+	}
+
+
+	function checkout() {
+		location.href = '/customer/cart';
 	}
 </script>
 </html>
