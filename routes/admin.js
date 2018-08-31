@@ -3,6 +3,7 @@ var router = express.Router();
 var Menu = require('../models/Food');
 var User = require('../models/User');
 var Table = require('../models/Table');
+var Order = require('../models/Order');
 var multer = require('multer');
 var Category = require('../models/Category');
 var flash = require('express-flash');
@@ -34,8 +35,8 @@ router.get('/addfood', auth, function(req, res, next) {
   });
 });
 
-router.get('/foodlist', auth, function(req, res, next) {
-  Menu.find(function(err,rtn){
+router.get('/foodlist', function(req, res, next) {
+  Menu.find({}).populate('category').exec(function(err,rtn){
     if(err) throw err;
       res.render('admin/food/food-list', { menu: rtn });
   });
@@ -57,8 +58,10 @@ router.get('/detail/:id', auth, function(req, res, next) {
     _id: req.params.id
   }, function(err, rtn) {
     if (err) throw err;
-
-        res.render('admin/food/food-detail', {menu: rtn});
+    Category.findById(rtn.category,function (err1,rtn1) {
+      if(err1) throw err1;
+      res.render('admin/food/food-detail', {menu: rtn,cat:rtn1});
+    });
   });
 });
 
@@ -96,20 +99,23 @@ router.post('/modify', upload.single('uploadImg'), function(req, res, next) {
   });
 
 router.post('/addfood',upload.single('uploadImg'), function(req, res, next) {
-  console.log('///////',req.body);
   var menu = new Menu();
-  menu.fname = req.body.fname;
-  menu.category = req.body.category;
-  if (req.file) menu.imgUrl = '/images/uploads/' + req.file.filename;
-  menu.price = req.body.price;
-  menu.brief = req.body.brief;
-  menu.description = req.body.description;
-  menu.additionalInfo = req.body.additionalInfo;
-
-  menu.save(function(err,rtn){
-    if (err)throw err;
-    res.redirect('/admin/foodlist');
+  Category.findOne({name : req.body.category},function (err1,rtn1) {
+    if(err1) throw err1;
+    menu.fname = req.body.fname;
+    menu.category = rtn1._id;
+    if (req.file) menu.imgUrl = '/images/uploads/' + req.file.filename;
+    menu.price = req.body.price;
+    menu.brief = req.body.brief;
+    menu.description = req.body.description;
+    menu.additionalInfo = req.body.additionalInfo;
+    menu.save(function(err,rtn){
+      if (err)throw err;
+      res.redirect('/admin/detail/'+rtn._id);
+    });
   });
+
+
 });
 
 router.post('/assignfoodCat', function(req, res, next) {
@@ -171,6 +177,14 @@ router.post('/duplicateTb', function(req, res, next){
     if(err) throw err;
     if(rtn != null) res.json({ status: false, msg: 'Duplicate Table Number & ID!!!'});
     else res.json({ status: true });
+  });
+});
+
+router.get('/sale', function(req, res, next) {
+  Order.find({}).populate('foods.food_id').exec(function(err, rtn){
+    if(err) throw err;
+    console.log(rtn);
+    res.render('admin/food/sale-history', { order: rtn });
   });
 });
 

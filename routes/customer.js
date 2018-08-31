@@ -3,6 +3,7 @@ var router = express.Router();
 var flash = require('express-flash');
 var Menu = require('../models/Food');
 var User = require('../models/User');
+var Order = require('../models/Order');
 
 /* GET home page. */
 var auth = function(req, res, next) {
@@ -46,7 +47,7 @@ router.get('/list', function(req, res, next) {
 });
 
 router.get('/detail/:id', function(req, res, next) {
-  Menu.findOne({_id:req.params.id},function(err,rtn){
+  Menu.findById(req.params.id).populate('category').exec(function(err,rtn){
     if(err) throw err;
     User.findById(rtn.insertedBy, function(err2, rtn2){
       if(err2) throw err2;
@@ -110,6 +111,49 @@ router.get('/remove/:id', function(req, res, next){
   var items = req.cookies.cart;
   res.cookie('cart', items);
   res.redirect('/customer/cart');
+});
+
+router.get('/order/:id', function(req, res, next) {
+  Order.findById(req.params.id).populate('foods.food_id').exec(function (err,rtn) {
+    if(err) throw err;
+    console.log('oooo',rtn.foods[0].food_id);
+    res.render('customer/food/order', { title: 'Express',order: rtn });
+  });
+});
+
+router.post('/orderlist', function(req, res, next) {
+  var order = new Order();
+  order.tolprice = req.body.tolp;
+  order.tnumber = req.body.tbnum;
+  console.log(req.body.ordertol);
+  for (var k in req.body.ordertol) {
+    order.foods.push({
+      food_id: req.body.ordertol[k].id,
+      count: req.body.ordertol[k].count,
+      price: req.body.ordertol[k].price
+    });
+  }
+
+  order.save(function(err,rtn){
+    if (err)throw err;
+    res.json({
+      status: true,
+      msg: 'success',
+      data: rtn,
+    });
+  });
+});
+
+router.post('/checkout/:id', function (req, res, next) {
+  console.log('call');
+  Order.findByIdAndUpdate(req.params.id,{$set:{ status:"01"}},function (err,rtn) {
+    if(err) throw err;
+    res.json({
+      status: true,
+      msg: 'success',
+      data: rtn,
+    });
+  });
 });
 
 module.exports = router;

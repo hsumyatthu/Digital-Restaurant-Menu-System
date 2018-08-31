@@ -22,14 +22,14 @@ var TableSchema = new Schema({
     type: Date,
     default:Date.now
   },
-  instered:{
+  inserted:{
     type: Date,
     default:Date.now
   },
   updatedBy:{
     type: String
   },
-  insteredBy:{
+  insertedBy:{
     type: String
   }
 });

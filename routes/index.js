@@ -81,7 +81,7 @@ router.post('/login', function(req, res, next) {
     req.flash( 'warn', 'ID not exists or password not matched!!' );
     res.redirect('/login');
   }else{
-    var table_cookie = {name: table.tnumber, id: table._id };
+    var table_cookie = {name: table.tnumber, id: table._id, tnumber: table.tnumber };
     res.cookie('table_cookie', table_cookie);
     req.session.table = { name: table.tnumber, id: table._id };
     res.redirect('/customer/home');

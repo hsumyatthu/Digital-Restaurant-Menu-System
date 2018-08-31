@@ -6,7 +6,7 @@
 	<% include ../../partial/header.ejs %>
 
 	<!-- Title Page -->
-	<section class="bg-title-page p-t-40 p-b-50 flex-col-c-m" style="background-image: url(/images/heading-pages-01.jpg);">
+	<section class="bg-title-page p-t-40 p-b-50 flex-col-c-m" style="background-image: url(/images/panama-city-beach-restaurants-1.jpg);">
 		<h2 class="l-text2 t-center">
 			Cart
 		</h2>
@@ -36,15 +36,15 @@
 								<td class="form-cart-item-remove text-center" >
 									<a href="/customer/remove/<%= itemdata[i]._id %>"><i class="fa fa-2x fa-trash-o"></i></a>
 								</td>
-								<td class="column-1 text-center">
-									<div class="cart-img-product b-rad-4 o-f-hidden text-center">
+								<td class="column-1">
+									<center><div class="cart-img-product b-rad-4 o-f-hidden text-center">
 										<img src="<%= itemdata[i].imgUrl %>" alt="IMG-PRODUCT">
-									</div>
+									</div></center>
 								</td>
 								<td class="column-2 text-center"><a href="/customer/detail/<%= itemdata[i]._id %>"><%= itemdata[i].fname %></a></td>
 								<td class="column-3 text-center"><%= itemdata[i].price %></td>
 								<td class="column-4 text-center">
-									<div class="flex-w bo5 of-hidden w-size17 text-center">
+									<center><div class="flex-w bo5 of-hidden w-size17">
 										<button class="btn-num-product-down color1 flex-c-m size7 bg8 eff2" onclick="minus(<%=i%>,'<%= prices[i] %>')">
 											<i class="fs-12 fa fa-minus" aria-hidden="true"></i>
 										</button>
@@ -54,16 +54,16 @@
 										<button class="btn-num-product-up color1 flex-c-m size7 bg8 eff2" onclick="plus(<%=i%>,'<%= prices[i] %>')">
 											<i class="fs-12 fa fa-plus" aria-hidden="true"></i>
 										</button>
-									</div>
+									</div></center>
 								</td>
 								<td class="column-5 text-center" id="prc<%=i%>"><%= prices[i] %></td>
 							</tr>
 							<% } %>
 						</tbody>
 						<tfoot>
-							<tr class="table-head">
-								<td class="column-10 text-center" colspan="5"><%= prices[i] %><b>Total</b></td>
-								<td class="column-11"></td>
+							<tr class="table-foot">
+								<td class="column-10 text-center" colspan="5"><b>Total</b></td>
+								<td class="column-11" id="tolprice"></td>
 							</tr>
 						</tfoot>
 					</table>
@@ -73,8 +73,8 @@
 			<div class="flex-w flex-sb-m p-t-25 p-b-25 bo8 p-l-35 p-r-60 p-lr-15-sm">
 				<div class="size10 trans-0-4 m-t-10 m-b-10">
 					<!-- Button -->
-					<button type="button" class="flex-c-m sizefull bg1 bo-rad-23 hov1 s-text1 trans-0-4">
-						Checkout
+					<button type="button" id="ordernow" class="flex-c-m sizefull bg1 bo-rad-23 hov1 s-text1 trans-0-4">
+						Order Now
 					</button>
 				</div>
 			</div>
@@ -120,6 +120,7 @@
 
 </body>
 <script type="text/javascript">
+
 	function minus(id,prc) {
 		console.log(prc);
 		var price = Number(prc);
@@ -127,14 +128,49 @@
 		console.log('call', price, product);
 		if(product == 1) return;
 		$('#prc'+id).html(price*(product-1));
+		sum();
 	}
+
 	function plus(id,prc) {
 		console.log(prc);
 		var price = Number(prc);
 		var product = Number($('#pro'+id).val());
 		console.log('call', price, (product+1));
 		$('#prc'+id).html(price*(product+1));
+		sum();
 	}
+
+	function sum() {
+		var sum1 = 0;
+		<% for(var i=0;i<itemdata.length;i++){%>
+			console.log($('#prc<%=i%>').html());
+			sum1 += Number($('#prc<%=i%>').html());
+		<%}%>
+		$('#tolprice').html(sum1);
+		console.log('/////qqq',sum1);
+	}
+	sum();
+
+	$('#ordernow').click(function () {
+			var ordertol = [];
+		<%for(var i=0; i<itemdata.length;i++){%>
+			console.log(Number($('#prc<%=i%>').html()));
+			ordertol.push({
+				id:'<%=itemdata[i]._id%>',
+				count: Number($('#pro<%=i%>').val()),
+				price: Number($('#prc<%=i%>').html()),
+			});
+			<%}%>
+			console.log('hjhiij',ordertol);
+			$.post(
+				'/customer/orderlist',
+				{ordertol:ordertol, tolp:Number($('#tolprice').html()),tbnum:JSON.parse(Cookies.get("table_cookie").substring(2)).tnumber}
+			).done(function (res) {
+				if(res.status){
+					location.href = '/customer/order/'+res.data._id;
+				}
+			});
+		});
 
 </script>
 </html>

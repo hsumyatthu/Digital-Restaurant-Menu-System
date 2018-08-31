@@ -9,8 +9,8 @@ var FoodSchema = new Schema({  //define data fields
     trim: true //remove both-side white space
   },
   category: {
-      type: String,
-      required: true,
+    type: Schema.Types.ObjectId,
+    ref: 'Categories',
   },
   price: {
     type: String,

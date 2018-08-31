@@ -30,13 +30,18 @@
 
 	<!-- Product Detail -->
 	<div class="container bgwhite p-t-35 p-b-80">
-		<div class="flex-w flex-sb">
-			<div class="w-size13 p-t-30 respon5">
-				<div class="wrap-slick3 flex-sb flex-w">
-					<div class="wrap-slick3-dots"></div>
-
+		<div class="flex-w flex-sb ">
+			<div class="w-size13 p-t-30 respon5 ">
+				<div class="wrap-slick3 flex-sb flex-w ">
+					<div class="wrap-slick-dots"></div>
 					<div class="slick3">
-						<div class="item-slick3" data-thumb="<%= menu.imgUrl %>">
+						<!-- <div class="item-slick3" data-thumb="<%= menu.imgUrl %>"> -->
+							<div class="wrap-pic-w ">
+								<img src="<%= menu.imgUrl %>" alt="IMG-PRODUCT">
+							</div>
+						<!-- </div> -->
+
+						<!-- <div class="item-slick3" data-thumb="<%= menu.imgUrl %>">
 							<div class="wrap-pic-w">
 								<img src="<%= menu.imgUrl %>" alt="IMG-PRODUCT">
 							</div>
@@ -46,13 +51,7 @@
 							<div class="wrap-pic-w">
 								<img src="<%= menu.imgUrl %>" alt="IMG-PRODUCT">
 							</div>
-						</div>
-
-						<div class="item-slick3" data-thumb="<%= menu.imgUrl %>">
-							<div class="wrap-pic-w">
-								<img src="<%= menu.imgUrl %>" alt="IMG-PRODUCT">
-							</div>
-						</div>
+						</div> -->
 					</div>
 				</div>
 			</div>
@@ -86,7 +85,7 @@
 					<b>Category:</b>
 				</h5>
 				<div class="p-b-13 s-text18">
-					<span class="m-text18"><%= menu.category %></span>
+					<span class="m-text18"><%= menu.category.name %></span>
 				</div>
 
 				<div class="p-t-33 p-b-13">
@@ -162,7 +161,7 @@
 	</script>
 <!--===============================================================================================-->
 	<script type="text/javascript" src="/vendor/slick/slick.min.js"></script>
-	<script type="text/javascript" src="/javascripts/slick-custom.js"></script>
+	<!--script type="text/javascript" src="/javascripts/slick-custom.js"></script-->
 <!--===============================================================================================-->
 	<script type="text/javascript" src="/vendor/sweetalert/sweetalert.min.js"></script>
 	<script type="text/javascript">
@@ -197,6 +196,7 @@
 		$.ajax('/customer/addcart', {method: 'POST', data: {'id': id, 'price':price, 'name': fname},
 		success: function(){
 			swal("aa", "is added to cart !", "success");
+			alert(id)
 			location.href = '/customer/detail/' + id;
 		},
 		error: function(err){
