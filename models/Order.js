@@ -47,11 +47,11 @@ var OrderSchema = new Schema({
 });
 
 OrderSchema.virtual('updated_date').get(function(){
-  return dateformat(this.updated,'dd/mm/yyy HH:MM');
+  return dateformat(this.updated,'dd/mm/yyyy');
 });
 
 OrderSchema.virtual('inserted_date').get(function(){
-  return dateformat(this.instered,'dd/mm/yyy HH:MM');
+  return dateformat(this.instered,'dd/mm/yyyy HH:MM');
 });
 
 module.exports = mongoose.model('Orders' , OrderSchema);//Users: Collection

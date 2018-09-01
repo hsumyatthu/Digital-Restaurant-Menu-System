@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Gentelella Alela! | </title>
+
+    <!-- Bootstrap -->
+    <link href="/vendor/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="/vendor/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <!-- NProgress -->
+    <link href="/vendor/vendors/nprogress/nprogress.css" rel="stylesheet">
+    <!-- Custom styling plus plugins -->
+    <link href="/build/css/custom.min.css" rel="stylesheet">
+  </head>
+
+  <% include ../../partial/admin-sidebar.ejs %>
+
+        <!-- page content -->
+        <div class="right_col" role="main">
+          <div class="">
+            <div class="clearfix"></div>
+            <div class="row">
+              <div class="col-md-12">
+                <div class="x_panel">
+                  <div class="x_title">
+                    <h2>Sale Detail View</h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                      </li>
+                      <li><a class="close-link"><i class="fa fa-close"></i></a>
+                      </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                  </div>
+                  <div class="x_content">
+
+                    <section class="content invoice"  id="print">
+                      <div class="row">
+                        <!-- /.col -->
+                        <div class="col-xs-9">
+                          <p class="lead text-right">Date: <%=order.updated_date%></p>
+                          <div class="table-responsive">
+                            <table class="table table-bordered">
+                              <thead>
+                                <tr>
+                                  <th class="text-center"><b>Food Name</b></th>
+                                  <th class="text-center"><b>Price</b></th>
+                                  <th class="text-center"><b>Count</b></th>
+                                  <th class="text-center"><b>Total</b></th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                <% for(var i = 0; i< order.foods.length; i++){%>
+                                <tr>
+                                <td class="text-center"><%= order.foods[i].food_id.fname %></td>
+                                <td class="text-center"><%= order.foods[i].food_id.price %></td>
+                                <td class="text-center"><%= order.foods[i].count %></td>
+                                <td class="text-center"><%= order.foods[i].price %></td>
+                                </tr>
+                                <% } %>
+                              </tbody>
+                              <tfoot>
+                                <td class="text-center" colspan="3"><b>Total</b></td>
+                                <td class="text-center"><%= order.tolprice %></td>
+                              </tfoot>
+                            </table>
+                          </div>
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-xs-12">
+            <button type="button" class="btn btn-default" onclick="printJS({ printable: 'print', type: 'html', header: 'Restaurant Garden' })">
+            <i class="fa fa-print"></i> Print</button>
+        </div>
+        </div>
+
+        <% include ../../partial/admin-footer.ejs %>
+        <!-- /footer content -->
+      </div>
+    </div>
+
+    <!-- jQuery -->
+    <script src="/vendor/vendors/jquery/dist/jquery.min.js"></script>
+    <!-- Bootstrap -->
+    <script src="/vendor/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
+    <!-- FastClick -->
+    <script src="/vendor/vendors/fastclick/lib/fastclick.js"></script>
+    <!-- NProgress -->
+    <script src="/vendor/vendors/nprogress/nprogress.js"></script>
+
+    <!-- Custom Theme Scripts -->
+    <script src="/build/js/custom.min.js"></script>
+    <script src="/javascripts/print.min.js" charset="utf-8"></script>
+  </body>
+</html>

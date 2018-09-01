@@ -184,7 +184,15 @@ router.get('/sale', function(req, res, next) {
   Order.find({}).populate('foods.food_id').exec(function(err, rtn){
     if(err) throw err;
     console.log(rtn);
-    res.render('admin/food/sale-history', { order: rtn });
+    res.render('admin/food/sale-history', {order:rtn });
+  });
+});
+
+router.get('/saledetail/:id', function(req, res, next) {
+  Order.findById(req.params.id).populate('foods.food_id').exec(function(err, rtn){
+    if(err) throw err;
+    console.log(rtn);
+      res.render('admin/food/sale-detail', {order:rtn});
   });
 });
 

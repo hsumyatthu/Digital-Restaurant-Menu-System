@@ -7,8 +7,6 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>DataTables | Gentelella</title>
-
     <!-- Bootstrap -->
     <link href="/vendor/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
@@ -60,7 +58,7 @@
                       <tbody>
                         <% for(var i=0; i< order.length; i++){%>
                         <tr>
-                          <td><%= order[i].tnumber %></td>
+                          <td><a href="/admin/saledetail/<%=order[i]._id%>"><%= order[i].tnumber %></a></td>
                           <td>
                           <% for(var j=0; j< order[i].foods.length; j++){%>
                           <li>Food Name:<b><%= order[i].foods[j].food_id.fname %></b>&nbsp&nbsp&nbsp
