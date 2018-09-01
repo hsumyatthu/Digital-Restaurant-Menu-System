@@ -6,6 +6,12 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style media="screen">
+      th {
+          background-color: #9370DB;
+          color: white;
+        }
+    </style>
 
     <title>Gentelella Alela! | </title>
 
@@ -67,7 +73,7 @@
                       <tbody>
                         <% for(var i=0; i< table.length; i++){%>
                         <tr>
-                          <th scope="row"><%= i+1 %></th>
+                          <td scope="row"><%= i+1 %></td>
                           <td><%= table[i].id %></td>
                           <td><%= table[i].tnumber %></td>
                           <td><button type="button" onclick="del('<%= table[i]._id %>')" name="button">Delete</button></td>

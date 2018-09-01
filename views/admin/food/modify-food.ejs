@@ -70,7 +70,7 @@
                           <select class="form-control" name="category">
                             <option value="">Select Category</option>
                             <% for(var i=0; i< cat.length; i++){%>
-                              <option value="<%= cat[i].name %>"><%= cat[i].name %></option>
+                              <option value="<%= cat[i]._id %>"><%= cat[i].name %></option>
                           <%  } %>
                           </select>
                         </div>

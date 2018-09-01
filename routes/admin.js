@@ -42,7 +42,7 @@ router.get('/foodlist', function(req, res, next) {
   });
 });
 
-router.get('/foodCatlist', auth, function(req, res, next) {
+router.get('/foodCatlist', function(req, res, next) {
   Category.find(function(err,rtn){
     if(err) throw err;
     res.render('admin/food/foodCat-list', { cat: rtn });
@@ -158,7 +158,7 @@ router.post('/assigntb', function(req, res, next) {
   });
 });
 
-router.get('/tblist', auth, function(req, res, next) {
+router.get('/tblist', function(req, res, next) {
   Table.find(function(err,rtn){
     if(err) throw err;
     res.render('admin/table/table-list', { table: rtn });

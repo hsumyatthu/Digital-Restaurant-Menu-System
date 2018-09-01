@@ -7,6 +7,12 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style media="screen">
+    th {
+        background-color: #9370DB;
+        color: white;
+      }
+  </style>
 
   <title>DataTables | Gentelella</title>
 
@@ -54,7 +60,7 @@
               <table id="datatable-checkbox" class="table table-striped table-bordered bulk_action">
                 <thead>
                   <tr>
-                    <th>No</th>
+                    <!-- <th>No</th> -->
                     <th>Name</th>
                     <th>Inserted</th>
                     <th>Updated</th>
@@ -65,7 +71,7 @@
                 <tbody>
                   <% for (var i=0; i< cat.length; i++){%>
                     <tr>
-                      <td><%= i+1 %></td>
+                      <!-- <td><%= i+1 %></td> -->
                       <td><%= cat[i].name %></td>
                       <td><%= cat[i].updated_date %></td>
                       <td><%= cat[i].inserted_date %></td>
