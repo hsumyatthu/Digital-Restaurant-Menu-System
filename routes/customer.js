@@ -4,6 +4,7 @@ var flash = require('express-flash');
 var Menu = require('../models/Food');
 var User = require('../models/User');
 var Order = require('../models/Order');
+var Category = require('../models/Category');
 
 /* GET home page. */
 var auth = function(req, res, next) {
@@ -25,7 +26,6 @@ router.get('/about', function(req, res, next) {
   res.render('customer/food/about', { title: 'Express' });
 });
 
-
 router.get('/list', function(req, res, next) {
   Menu.find(function(err,rtn){
     if(err) throw err;
@@ -42,7 +42,11 @@ router.get('/list', function(req, res, next) {
       }
     }
     console.log(rtn);
-    res.render('customer/food/food-list', { menu: rtn});
+    Category.find(function(err2,rtn2){
+      if(err2) throw err2;
+      console.log(rtn2);
+      res.render('customer/food/food-list', { menu: rtn, cat:rtn2});
+    });
   });
 });
 
@@ -133,7 +137,7 @@ router.post('/orderlist', function(req, res, next) {
       price: req.body.ordertol[k].price
     });
   }
-  
+
   order.save(function(err,rtn){
     if (err)throw err;
     res.json({

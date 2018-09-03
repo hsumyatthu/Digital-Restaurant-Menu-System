@@ -15,19 +15,24 @@
 
 	<!-- Content page -->
 	<section class="bgwhite p-t-55 p-b-65">
+		<!-- <form action="/customer/list" method="post"> -->
 		<div class="container">
 			<div class="row">
 				<div class="col-sm-6 col-md-4 col-lg-3 p-b-50">
 					<div class="leftbar p-r-20 p-r-0-sm">
 						<!--  -->
 						<h4 class="m-text14 p-b-7">
-							Categories
-						</h4>
+							<div class="rs2-select2 bo4 of-hidden w-size12 m-t-5 m-b-5 m-r-10">
+								<select class="selection-2" name="category">
+									<option value="">Select Category</option>
+									<% for(var i= 0; i< cat.length; i++){%>
+									<option value="<%=cat[i].id%>"><%= cat[i].name %></option>
+									<% } %>
+								</select>
 
-						<ul class="p-b-54">
-							<li class="p-t-4">
-								<a href="#" class="s-text13">Burger</a><br>
-								<a href="#" class="s-text13">Sandwich</a><br>
+							</div>
+						</h4>
+								<!-- <a href="#" class="s-text13">Sandwich</a><br>
 								<a href="#" class="s-text13">Hot Coffee</a><br>
 								<a href="#" class="s-text13">Iced Coffee</a><br>
 								<a href="#" class="s-text13">Other Drink</a><br>
@@ -45,13 +50,7 @@
 								<a href="#" class="s-text13">Soup</a><br>
 								<a href="#" class="s-text13">Salad</a><br>
 								<a href="#" class="s-text13">Vegetables</a><br>
-								<a href="#" class="s-text13">Snacks</a>
-
-
-
-
-							</li>
-						</ul>
+								<a href="#" class="s-text13">Snacks</a> -->
 					</div>
 				</div>
 
@@ -78,13 +77,17 @@
 									<option>$200.00+</option>
 								</select>
 							</div>
-						</div>
-
-						<div class="search-product pos-relative bo4 of-hidden">
-							<input class="w-size9 m-t-13 m-b-13 m-r-18" type="text" name="search-product" placeholder=" Search ...">
-							<button class="flex-c-m size5 ab-r-m color2 color0-hov trans-0-4">
-								<i class="fs-13 fa fa-search" aria-hidden="true"></i>
-							</button>
+							<div class="search-product pos-relative rs2-select2 bo4 of-hidden w-size12 m-t-5 m-b-5 m-r-10">
+								<input class="w-size9 m-t-13 m-b-13 m-r-18" type="text" name="search-product">
+								<button class="flex-c-m size5 ab-r-m color2 color0-hov trans-0-4">
+									<i class="fs-13 fa fa-search" aria-hidden="true"></i>
+								</button>
+							</div>
+							<div class="w-size17">
+								<button class="flex-c-m size2 bg1 bo-rad-23 hov1 m-text3 trans-0-4">
+									Find
+								</button>
+							</div>
 						</div>
 					</div>
 
@@ -92,7 +95,6 @@
 					<div class="row">
 						<% for(var i=0; i< menu.length; i++){ %>
 						<div class="col-sm-12 col-md-6 col-lg-4 p-b-50">
-							<!-- Block2 -->
 							<div class="block2">
 								<div class="block2-img wrap-pic-w of-hidden pos-relative block2-labelnew">
 									<img src="<%= menu[i].imgUrl %>" alt="IMG-PRODUCT">
@@ -104,7 +106,6 @@
 										</a>
 
 										<div class="block2-btn-addcart w-size1 trans-0-4">
-											<!-- Button -->
 											<% if(menu[i].cart){ %>
 												<button class="flex-c-m size1 bg4 bo-rad-23 hov1 s-text1 trans-0-4" id="btncheck" onclick="checkout()" >
 													Checkout
@@ -141,6 +142,7 @@
 				</div>
 			</div>
 		</div>
+	<!-- </form> -->
 	</section>
 
 	<!-- Footer -->
@@ -249,6 +251,10 @@
 	}
 	function checkout() {
 		location.href = '/customer/cart';
+	}
+
+	function find(cat) {
+		console.log(cat);
 	}
 </script>
 </html>

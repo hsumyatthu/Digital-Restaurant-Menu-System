@@ -3459,8 +3459,8 @@ SHAPE SHAPE SHAPE SHAPE SHAPE SHAPE SHAPE SHAPE SHAPE SHAPE
 }
 
 .size2 {
-	width: 100%;
-	height: 46px;
+	width: 80%;
+	height: 40px;
 }
 
 .size3 {
@@ -3647,6 +3647,7 @@ SHAPE SHAPE SHAPE SHAPE SHAPE SHAPE SHAPE SHAPE SHAPE SHAPE
 
 .w-size17 {
 	width: 138px;
+  margin-top: 10px;
 }
 
 .w-size18 {
@@ -3709,7 +3710,7 @@ SHAPE SHAPE SHAPE SHAPE SHAPE SHAPE SHAPE SHAPE SHAPE SHAPE
 ///////////////////////////////////////////////////////////
 */
 .bg0 {background-color: #e65540;}
-.bg1 {background-color: #222222;}
+.bg1 {background-color:	#778899;}
 .bg3 {background-color: rgba(255,255,255,0.95);}
 .bg4 {background-color: #111111;}
 .bg5 {background-color: #f2f2f2;}
@@ -3963,7 +3964,7 @@ EFFECT   EFFECT   EFFECT   EFFECT   EFFECT   EFFECT  EFFECT
 ///////////////////////////////////////////////////////////
 */
 .hov1:hover {
-    background-color: #e65540;
+    background-color: #00BFFF;
   	color: white;
 }
 
