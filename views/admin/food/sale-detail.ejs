@@ -12,7 +12,7 @@
           color: white;
         }
     </style>
-    
+
     <title>Gentelella Alela! | </title>
 
     <!-- Bootstrap -->
@@ -64,16 +64,16 @@
                               <tbody>
                                 <% for(var i = 0; i< order.foods.length; i++){%>
                                 <tr>
-                                <td class="text-center"><%= order.foods[i].food_id.fname %></td>
-                                <td class="text-center"><%= order.foods[i].food_id.price %></td>
-                                <td class="text-center"><%= order.foods[i].count %></td>
-                                <td class="text-center"><%= order.foods[i].price %></td>
+                                <td class="text-center"><b><%= order.foods[i].food_id.fname %></b></td>
+                                <td class="text-center"><b><%= order.foods[i].food_id.price %></b></td>
+                                <td class="text-center"><b><%= order.foods[i].count %></b></td>
+                                <td class="text-center"><b><%= order.foods[i].price %></b></td>
                                 </tr>
                                 <% } %>
                               </tbody>
                               <tfoot>
                                 <td class="text-center" colspan="3"><b>Total</b></td>
-                                <td class="text-center"><%= order.tolprice %></td>
+                                <td class="text-center"><b><%= order.tolprice %></b></td>
                               </tfoot>
                             </table>
                           </div>

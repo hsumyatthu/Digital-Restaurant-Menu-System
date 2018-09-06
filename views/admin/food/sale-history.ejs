@@ -63,7 +63,7 @@
                       <tbody>
                         <% for(var i=0; i< order.length; i++){%>
                         <tr>
-                          <td><a href="/admin/saledetail/<%=order[i]._id%>"><%= order[i].tnumber %></a></td>
+                          <td><a href="/admin/saledetail/<%=order[i]._id%>"><b><%= order[i].tnumber %></b></a></td>
                           <td>
                           <% for(var j=0; j< order[i].foods.length; j++){%>
                           <li>Food Name:<b><%= order[i].foods[j].food_id.fname %></b>&nbsp&nbsp&nbsp
@@ -72,9 +72,9 @@
                           <br>
                           <% } %>
                         </td>
-                          <td><%= order[i].tolprice %></td>
-                          <td><%= order[i].inserted_date %></td>
-                          <td><%= order[i].updated_date %></td>
+                          <td><b><%= order[i].tolprice %></b></td>
+                          <td><b><%= order[i].inserted_date %></b></td>
+                          <td><b><%= order[i].updated_date %></b></td>
                         </tr>
                         <% }%>
                       </tbody>

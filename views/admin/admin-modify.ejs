@@ -6,12 +6,6 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <style media="screen">
-      th {
-          background-color: #9370DB;
-          color: white;
-        }
-    </style>
 
     <title>Gentelella Alela! | </title>
 
@@ -21,77 +15,75 @@
     <link href="/vendor/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
     <!-- NProgress -->
     <link href="/vendor/vendors/nprogress/nprogress.css" rel="stylesheet">
-    <!-- iCheck -->
-   <link href="/vendor/vendors/iCheck/skins/flat/green.css" rel="stylesheet">
 
     <!-- Custom Theme Style -->
     <link href="/build/css/custom.min.css" rel="stylesheet">
   </head>
 
-  <% include ../../partial/admin-sidebar.ejs %>
+  <% include ../partial/admin-sidebar.ejs %>
         <!-- /top navigation -->
 
         <!-- page content -->
         <div class="right_col" role="main">
           <div class="">
-              <div class="title_right">
-                <div class="col-md-3 col-sm-3 col-xs-10 form-group pull-right top_search">
-                  <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Search for...">
-                    <span class="input-group-btn">
-                      <button class="btn btn-default" type="button">Go!</button>
-                    </span>
-                  </div>
-                </div>
-              </div>
-
             <div class="clearfix"></div>
             <div class="row">
               <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel">
                   <div class="x_title">
-                    <h2>Table List</h2>
+                    <h2>Admin Assign</h2>
                     <ul class="nav navbar-right panel_toolbox">
                       <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                       </li>
+
                       <li><a class="close-link"><i class="fa fa-close"></i></a>
                       </li>
                     </ul>
                     <div class="clearfix"></div>
                   </div>
-                  <div class="col-md-7 col-sm-7 col-xs-7">
 
-                    <table class="table table-bordered">
-                      <thead>
-                        <tr>
-                          <th>#</th>
-                          <th>ID</th>
-                          <th>Table Number</th>
-                          <th>Function</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <% for(var i=0; i< table.length; i++){%>
-                        <tr>
-                          <td scope="row"><%= i+1 %></td>
-                          <td><b><%= table[i].id %></b></td>
-                          <td><b><%= table[i].tnumber %></b></td>
-                          <td><button type="button" onclick="del('<%= table[i]._id %>')" name="button">Delete</button></td>
-                        </tr>
-                        <% } %>
-                      </tbody>
-                    </table>
+                  <div class="x_content">
+                    <form action="/admin/adminmodify" name="frm" class="form-horizontal form-label-left" method="POST" novalidate>
+                      <input type="hidden" name="id" value="<%=user._id%>">
+                      <div class="item form-group">
+                      <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Name <span class="required">*</span>
+                      </label>
+                      <div class="col-md-6 col-sm-6 col-xs-12">
+                        <input id="name" class="form-control col-md-7 col-xs-12" value="<%=user.name%>" name="name" required="required" type="text">
+                      </div>
+                    </div>
+
+                      <div class="item form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="email">Email <span class="required">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                          <input type="email" id="email" value="<%=user.email%>" name="email" required="required" class="form-control col-md-7 col-xs-12">
+                        </div>
+                      </div>
+
+                      <div class="item form-group">
+                        <label for="password" class="control-label col-md-3">Password</label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                          <input id="password" type="password" name="password" data-validate-length="6,8" class="form-control col-md-7 col-xs-12" required="required">
+                        </div>
+                      </div>
+
+                      <div class="form-group">
+                        <div class="col-md-6 col-md-offset-3">
+                          <button id="save" type="submit" class="btn btn-success">Save</button>
+                        </div>
+                      </div>
+                    </form>
                   </div>
                 </div>
               </div>
-
             </div>
           </div>
         </div>
         <!-- /page content -->
 
         <!-- footer content -->
-      <% include ../../partial/admin-footer.ejs %>
+        <% include ../partial/admin-footer.ejs %>
         <!-- /footer content -->
       </div>
     </div>
@@ -104,17 +96,11 @@
     <script src="/vendor/vendors/fastclick/lib/fastclick.js"></script>
     <!-- NProgress -->
     <script src="/vendor/vendors/nprogress/nprogress.js"></script>
-    <!-- iCheck -->
-    <script src="/vendor/vendors/iCheck/icheck.min.js"></script>
+    <!-- validator -->
+    <script src="/vendor/vendors/validator/validator.js"></script>
 
     <!-- Custom Theme Scripts -->
     <script src="/build/js/custom.min.js"></script>
-  </body>
-  <script type="text/javascript">
-  function del(id) {
-    if(confirm('Are you sure?'))
-    location.href= '/admin/deleteTb/'+id;
-  }
 
-  </script>
+  </body>
 </html>

@@ -72,9 +72,9 @@
                   <% for (var i=0; i< cat.length; i++){%>
                     <tr>
                       <!-- <td><%= i+1 %></td> -->
-                      <td><%= cat[i].name %></td>
-                      <td><%= cat[i].updated_date %></td>
-                      <td><%= cat[i].inserted_date %></td>
+                      <td><b><%= cat[i].name %></b></td>
+                      <td><b><%= cat[i].updated_date %></b></td>
+                      <td><b><%= cat[i].inserted_date %></b></td>
                       <td><button type="button" onclick="del('<%= cat[i]._id %>')" name="button">Delete</button></td>
                     </tr>
                   <% } %>

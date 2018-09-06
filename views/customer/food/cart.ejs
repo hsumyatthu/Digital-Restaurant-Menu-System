@@ -47,8 +47,8 @@
 										<img src="<%= itemdata[i].imgUrl %>" alt="IMG-PRODUCT">
 									</div></center>
 								</td>
-								<td class="column-2 text-center"><a href="/customer/detail/<%= itemdata[i]._id %>"><%= itemdata[i].fname %></a></td>
-								<td class="column-3 text-center"><%= itemdata[i].price %></td>
+								<td class="column-2 text-center"><a href="/customer/detail/<%= itemdata[i]._id %>"><b><%= itemdata[i].fname %></b></a></td>
+								<td class="column-3 text-center"><b><%= itemdata[i].price %></b></td>
 								<td class="column-4 text-center">
 									<center><div class="flex-w bo5 of-hidden w-size17">
 										<button class="btn-num-product-down color1 flex-c-m size7 bg8 eff2" onclick="minus(<%=i%>,'<%= prices[i] %>')">
@@ -62,7 +62,7 @@
 										</button>
 									</div></center>
 								</td>
-								<td class="column-5 text-center" id="prc<%=i%>"><%= prices[i] %></td>
+								<td class="column-5 text-center" ><b id="prc<%=i%>"><%= prices[i] %></b></td>
 							</tr>
 							<% } %>
 						</tbody>
@@ -126,7 +126,6 @@
 
 </body>
 <script type="text/javascript">
-
 	function minus(id,prc) {
 		console.log(prc);
 		var price = Number(prc);
@@ -149,11 +148,12 @@
 	function sum() {
 		var sum1 = 0;
 		<% for(var i=0;i<itemdata.length;i++){%>
-			console.log($('#prc<%=i%>').html());
+			console.log(typeof Number($('#prc<%=i%>').html()));
 			sum1 += Number($('#prc<%=i%>').html());
 		<%}%>
-		$('#tolprice').html(sum1);
 		console.log('/////qqq',sum1);
+		$('#tolprice').html(sum1);
+
 	}
 	sum();
 

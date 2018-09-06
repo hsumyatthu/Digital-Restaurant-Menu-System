@@ -15,7 +15,7 @@
 
 	<!-- Content page -->
 	<section class="bgwhite p-t-55 p-b-65">
-		<!-- <form action="/customer/list" method="post"> -->
+		<form action="/customer/list" method="post">
 		<div class="container">
 			<div class="row">
 				<div class="col-sm-6 col-md-4 col-lg-3 p-b-50">
@@ -32,25 +32,7 @@
 
 							</div>
 						</h4>
-								<!-- <a href="#" class="s-text13">Sandwich</a><br>
-								<a href="#" class="s-text13">Hot Coffee</a><br>
-								<a href="#" class="s-text13">Iced Coffee</a><br>
-								<a href="#" class="s-text13">Other Drink</a><br>
-								<a href="#" class="s-text13">Soft drink & Juice</a><br>
-								<a href="#" class="s-text13">Fresh Fruit Juice & Mickshake</a><br>
-								<a href="#" class="s-text13">Yogurt</a><br>
-								<a href="#" class="s-text13">Dessert</a><br>
-								<a href="#" class="s-text13">Pork</a><br>
-								<a href="#" class="s-text13">Chicken</a><br>
-								<a href="#" class="s-text13">Fish</a><br>
-								<a href="#" class="s-text13">Rice</a><br>
-								<a href="#" class="s-text13">Seafood</a><br>
-								<a href="#" class="s-text13">Noodles</a><br>
-								<a href="#" class="s-text13">Fried Rice</a><br>
-								<a href="#" class="s-text13">Soup</a><br>
-								<a href="#" class="s-text13">Salad</a><br>
-								<a href="#" class="s-text13">Vegetables</a><br>
-								<a href="#" class="s-text13">Snacks</a> -->
+
 					</div>
 				</div>
 
@@ -58,33 +40,29 @@
 					<!--  -->
 					<div class="flex-sb-m flex-w p-b-35">
 						<div class="flex-w">
-							<div class="rs2-select2 bo4 of-hidden w-size12 m-t-5 m-b-5 m-r-10">
+							<!-- <div class="rs2-select2 bo4 of-hidden w-size12 m-t-5 m-b-5 m-r-10">
 								<select class="selection-2" name="sorting">
-									<option>Default Sorting</option>
-									<option>Popularity</option>
-									<option>Price: low to high</option>
-									<option>Price: high to low</option>
+									<option value="">Default Sorting</option>
+									<option value="desc">Price: low to high</option>
+									<option value="asc">Price: high to low</option>
 								</select>
-							</div>
+							</div> -->
 
-							<div class="rs2-select2 bo4 of-hidden w-size12 m-t-5 m-b-5 m-r-10">
-								<select class="selection-2" name="sorting">
+							<!-- <div class="rs2-select2 bo4 of-hidden w-size12 m-t-5 m-b-5 m-r-10">
+								<select class="selection-2" name="sortingpPrc" id="sortingpPrc">
 									<option>Price</option>
-									<option>$0.00 - $50.00</option>
-									<option>$50.00 - $100.00</option>
-									<option>$100.00 - $150.00</option>
-									<option>$150.00 - $200.00</option>
-									<option>$200.00+</option>
+									<option value="['0','1000']">under 1000kyat</option>
+									<option value="['1000','5000']">1000kyat - 5000kyat</option>
+									<option value="['5000','10000']">5000kyat - 10000kyat</option>
+									<option value="['10000','15000']">10000kyat - 15000kyats</option>
+									<option value="['15000','over']">15000 over</option>
 								</select>
-							</div>
+							</div> -->
 							<div class="search-product pos-relative rs2-select2 bo4 of-hidden w-size12 m-t-5 m-b-5 m-r-10">
-								<input class="w-size9 m-t-13 m-b-13 m-r-18" type="text" name="search-product">
-								<button class="flex-c-m size5 ab-r-m color2 color0-hov trans-0-4">
-									<i class="fs-13 fa fa-search" aria-hidden="true"></i>
-								</button>
+								<input class="w-size9 m-t-13 m-b-13 m-r-18" type="text" name="keyword">
 							</div>
 							<div class="w-size17">
-								<button class="flex-c-m size2 bg1 bo-rad-23 hov1 m-text3 trans-0-4">
+								<button class="flex-c-m size2 bg1 bo-rad-23 hov1 m-text3 trans-0-4" type="submit">
 									Find
 								</button>
 							</div>
@@ -107,11 +85,11 @@
 
 										<div class="block2-btn-addcart w-size1 trans-0-4">
 											<% if(menu[i].cart){ %>
-												<button class="flex-c-m size1 bg4 bo-rad-23 hov1 s-text1 trans-0-4" id="btncheck" onclick="checkout()" >
+												<button class="flex-c-m size1 bg4 bo-rad-23 hov1 s-text1 trans-0-4" id="btncheck" type="button" onclick="checkout()" >
 													Checkout
 												</button>
 											<%}else{%>
-												<button class="flex-c-m size1 bg4 bo-rad-23 hov1 s-text1 trans-0-4" id="btncart" onclick="cart('<%= menu[i]._id %>', '<%= menu[i].price %>', '<%= menu[i].fname %>')" >
+												<button class="flex-c-m size1 bg4 bo-rad-23 hov1 s-text1 trans-0-4" id="btncart" type="button" onclick="cart('<%= menu[i]._id %>', '<%= menu[i].price %>', '<%= menu[i].fname %>')" >
 												Add to Cart
 											</button>
 											<%}%>
@@ -142,7 +120,7 @@
 				</div>
 			</div>
 		</div>
-	<!-- </form> -->
+	</form>
 	</section>
 
 	<!-- Footer -->
@@ -256,5 +234,13 @@
 	function find(cat) {
 		console.log(cat);
 	}
+	$('#sortingpPrc').change(function () {
+		var a = this.value;
+		a = a.replace(/'/g, '"')
+		a = JSON.parse(a)
+		console.log(a);
+		// var ch = JSON.parse(this.value)
+		// console.log(ch);
+	})
 </script>
 </html>

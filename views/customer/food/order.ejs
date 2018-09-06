@@ -37,19 +37,19 @@
 												<img src="<%=order.foods[i].food_id.imgUrl%>" alt="IMG-PRODUCT">
 											</div></center>
 										</td>
-										<td class="column-2 text-center"><%=order.foods[i].food_id.fname%></td>
-										<td class="column-3 text-center"><%=order.foods[i].food_id.price%></td>
+										<td class="column-2 text-center"><b><%=order.foods[i].food_id.fname%></b></td>
+										<td class="column-3 text-center"><b><%=order.foods[i].food_id.price%></b></td>
 										<td class="column-4 text-center">
-											<%=order.foods[i].count%>
+											<b><%=order.foods[i].count%></b>
 										</td>
-										<td class="column-5 text-center"><%=order.foods[i].price%></td>
+										<td class="column-5 text-center"><b><%=order.foods[i].price%></b></td>
 									</tr>
 								<%}%>
 							</tbody>
 							<tfoot>
 								<tr class="table-foot">
 									<td class="column-10 text-center" colspan="4"><b>Total</b></td>
-									<td class="column-11 text-center"><%=order.tolprice%></td>
+									<td class="column-11 text-center"><b><%=order.tolprice%></b></td>
 								</tr>
 							</tfoot>
 						</table>

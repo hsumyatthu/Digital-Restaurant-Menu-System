@@ -4,7 +4,9 @@ var User = require('../models/User');
 var Menu = require('../models/Food');
 var Table = require('../models/Table');
 var multer = require('multer');
+var moment = require('moment');
 var Category = require('../models/Category');
+var Order = require('../models/Order');
 var flash = require('express-flash');
 var cookieParser = require('cookie-parser');
 var upload = multer({
@@ -19,12 +21,20 @@ var auth = function(req, res, next) {
     console.log('request path',req.path);
     req.flash('forward', req.path);
     res.redirect('/signin');
-    }
+  }
 };
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
+  var today = moment().startOf('day');
+  var tomorrow = moment(today).endOf('day');
+  console.log('////',today,tomorrow);
+  Order.find({inserted:{$lt: tomorrow.toDate(),$gte: today.toDate()}},function (err,order) {
+    if(err) throw err;
+    console.log('////',order);
+    res.render('index', { title: 'Express' });
+  });
+
 });
 
 router.get('/signin', function(req, res, next) {
@@ -45,25 +55,25 @@ router.post('/signin', function(req, res, next) {
   });
 });
 
-// router.post('/signup', function(req, res, next) {
-//   var user = new User();
-//   user.name = req.body.name;
-//   user.email = req.body.email;
-//   user.password = req.body.password;
-//   user.save(function (err, rtn) {
-//     if(err) throw err;
-//     req.flash( 'success', 'Registration successful.' );
-//     res.redirect('/signin');
-//   });
-// });
+router.post('/signup', function(req, res, next) {
+  var user = new User();
+  user.name = req.body.name;
+  user.email = req.body.email;
+  user.password = req.body.password;
+  user.save(function (err, rtn) {
+    if(err) throw err;
+    req.flash( 'success', 'Registration successful.' );
+    res.redirect('/signin');
+  });
+});
 
-// router.post('/signup/duplicate', function(req, res, next){
-//   User.findOne({ email: req.body.email}, function(err,rtn){
-//     if(err) throw err;
-//     if(rtn != null) res.json({ status: false, msg: 'Duplicate owner email!!!'});
-//     else res.json({ status: true });
-//   });
-// });
+router.post('/signup/duplicate', function(req, res, next){
+  User.findOne({ email: req.body.email}, function(err,rtn){
+    if(err) throw err;
+    if(rtn != null) res.json({ status: false, msg: 'Duplicate owner email!!!'});
+    else res.json({ status: true });
+  });
+});
 
 router.get('/signout',function (req,res) {
   req.session.destroy();
@@ -89,5 +99,17 @@ router.post('/login', function(req, res, next) {
   });
 });
 
+router.get('/init', function(req, res, next) {
+  //make model using req.body
+  var user = new User();
+  user.name = 'Admin';
+  user.email = 'admin@gmail.com';
+  user.password = 'Ad12345';
+  user.save(function(err, result){
+    if(err) throw err;
+    req.flash('success', 'Registration successful. Welcome to' +user.name);
+  res.redirect('/signin' );
+  });
+});
 
 module.exports = router;

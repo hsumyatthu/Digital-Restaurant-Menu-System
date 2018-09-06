@@ -18,7 +18,7 @@ var auth = function(req, res, next) {
     }
 };
 
-router.get('/home', auth, function(req, res, next) {
+router.get('/home', function(req, res, next) {
   res.render('customer/index2', { title: 'Express' });
 });
 
@@ -26,8 +26,14 @@ router.get('/about', function(req, res, next) {
   res.render('customer/food/about', { title: 'Express' });
 });
 
-router.get('/list', function(req, res, next) {
-  Menu.find(function(err,rtn){
+router.all('/list', function(req, res, next) {
+  var params = [req.body.keyword ||'',req.body.category ||'',req.body.sorting];
+  // if(req.body.category!=null){
+  //   params[1].push(req.body.category);
+  // }
+  // if(req.body.keyword)
+  console.log(params);
+  Menu.find({fname: (params[0]=='')?{$exists:true}:{'$regex':params[0],'$options':'i'}, category: (params[1]=='')?{$exists:true}:params[1]},function(err,rtn){
     if(err) throw err;
     if(req.cookies.cart){
       console.log('have',req.cookies.cart);

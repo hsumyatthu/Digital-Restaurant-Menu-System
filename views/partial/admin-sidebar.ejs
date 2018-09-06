@@ -16,8 +16,8 @@
               <img src="/images/picture.jpg" alt="..." class="img-circle profile_img">
             </div>
             <div class="profile_info">
-              <span>Welcome,</span>
-              <h2>Hsumyat</h2>
+              <span>Welcome</span>
+              <h2></h2>
             </div>
             <div class="clearfix"></div>
           </div>
@@ -32,6 +32,8 @@
               <ul class="nav side-menu">
                 <li><a href="/admin"><i class="fa fa-home"></i> Home </span></a>
                 </li>
+                <li><a href="/admin/adminmodify"><i class="fa fa-user"></i> Admin Update</a></li>
+
                 <li><a><i class="fa fa-edit"></i>Management Foods <span class="fa fa-chevron-down"></span></a>
                   <ul class="nav child_menu">
                     <li><a href="/admin/addfood">Add Food </a></li>
@@ -93,7 +95,7 @@
             <ul class="nav navbar-nav navbar-right">
               <li class="">
                 <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                  <img src="/images/picture.jpg" alt="">Hsumyat
+                  <img src="/images/picture.jpg" alt=""><span id="proname">Hsumyat</span>
                   <span class=" fa fa-angle-down"></span>
                 </a>
                 <ul class="dropdown-menu dropdown-usermenu pull-right">
@@ -154,3 +156,12 @@
           </nav>
         </div>
       </div>
+      <script src="/vendor/vendors/jquery/dist/jquery.min.js" charset="utf-8"></script>
+      <script src="/javascripts/js.cookie.js" charset="utf-8"></script>
+      <script type="text/javascript">
+        $(function(){
+          if (Cookies.get("user_cookie")) {
+            $('#proname').html(JSON.parse(Cookies.get("user_cookie").substring(2)).name);
+          }
+        })
+      </script>

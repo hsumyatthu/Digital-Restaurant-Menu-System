@@ -26,12 +26,6 @@ var UserSchema = new Schema({
     type: Date,
     default:Date.now
   },
-  updatedBy:{
-    type: String
-  },
-  insertedBy:{
-    type: String
-  }
 });
 
 //hashing a password before saving it to the database

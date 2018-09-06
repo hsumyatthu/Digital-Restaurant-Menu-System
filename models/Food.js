@@ -13,9 +13,17 @@ var FoodSchema = new Schema({  //define data fields
     ref: 'Categories',
   },
   price: {
-    type: String,
+    type: Number,
     require: true,
     trim: true
+  },
+  count: {
+    type: Number,
+    default: 0
+  },
+  today: {
+    type: String,
+    default: 0 //0 is nomal 1 is today special
   },
   imgUrl: {
       type: String,
