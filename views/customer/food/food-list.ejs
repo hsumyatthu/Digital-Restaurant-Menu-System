@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <% include ../../partial/head.ejs %>
+<link rel="stylesheet" href="/stylesheets/sweetalert.css">
 <body class="animsition">
 
 	<!-- Header -->
@@ -26,7 +27,7 @@
 								<select class="selection-2" name="category">
 									<option value="">Select Category</option>
 									<% for(var i= 0; i< cat.length; i++){%>
-									<option value="<%=cat[i].id%>"><%= cat[i].name %></option>
+									<option value="<%=cat[i].id%>"><%= cat[i].main_cat %></option>
 									<% } %>
 								</select>
 
@@ -164,7 +165,7 @@
 	<script type="text/javascript" src="/vendor/slick/slick.min.js"></script>
 	<script type="text/javascript" src="/javascripts/slick-custom.js"></script>
 <!--===============================================================================================-->
-	<script type="text/javascript" src="/vendor/sweetalert/sweetalert.min.js"></script>
+	<script type="text/javascript" src="/javascripts/sweetalert.min.js"></script>
 	<script type="text/javascript">
 		$('.block2-btn-addcart').each(function(){
 			var nameProduct = $(this).parent().parent().parent().find('.block2-name').html();
@@ -214,18 +215,26 @@
 </body>
 <script type="text/javascript">
 	function cart(id, price, fname){
-		$.ajax('/customer/addcart',{ method:'POST', data:{'id': id, 'price': price, 'name': fname},
-		success: function(){
-			swal("aa", "is added to cart !", "success");
-			location.href = '/customer/list';
-		},
-		error: function(err){
-			console.log(err);
-		},
-		complate: function(){
-			console.log('complate');
+		$.post(
+			'/customer/addcart',
+		 	{'id': id, 'price': price, 'name': fname}
+		).done(function(res){
+			if(res.status){
+				swal({
+					title: "Add to cart!!",
+					text: "successfully Item add",
+					type: "success",
+					confirmButtonText: "OK",
+					closeOnConfirm: false
+				},
+				function (isConfirm) {
+					location.href = '/customer/list';
+				});
 			}
+		}).fail(function (err) {
+			console.log(err.status);
 		});
+
 	}
 	function checkout() {
 		location.href = '/customer/cart';

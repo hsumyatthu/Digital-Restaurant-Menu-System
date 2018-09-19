@@ -25,16 +25,38 @@ var auth = function(req, res, next) {
 };
 /* GET home page. */
 router.get('/', function(req, res, next) {
-
-  Order.count({inserted:{$lt: new Date(),$gte: new Date(new Date().setDate(new Date().getDate()-1))}},function (err,order) {
+  Order.count({inserted:{$lt: new Date(new Date().setHours(23,59,59)),$gte: new Date(new Date().setHours(0,0,0))}},function (err,order) {
     if(err) throw err;
-    console.log('////',order);
-    res.render('admin/index', { title: 'Express',orderC:order });
+    Menu.count(function (err2, menuC) {
+      if(err2) throw err2;
+      Order.find({inserted:{$lt: new Date(new Date().setHours(23,59,59)),$gte: new Date(new Date().setHours(0,0,0))}},function(err3, sale){
+        if(err3) throw err3;
+        var sum = 0;
+        for(var i in sale){
+          sum += sale[i].tolprice;
+        }
+        Table.count(function (err4, toltable){
+          if(err4) throw err4;
+            Order.find(function(err5, sale2){
+              if(err5) throw err5;
+              var sum2 = 0;
+              for(var j in sale2){
+                sum2 += sale2[j].tolprice;
+              }
+              Menu.find({}).sort({count:-1}).limit(10).exec(function(err6, food){
+                if(err6) throw err6;
+                console.log(food);
+                  res.render('admin/index', { title: 'Express',orderC:order, menuC:menuC, saletd: sum, toltable: toltable, saleyl: sum2, top: food});
+              });
+            });
+        });
+      });
+    });
   });
 });
 
 router.get('/addfood', function(req, res, next) {
-  Category.find(function(err,rtn){
+  Category.find({},{'main_cat' : 1, _id : 0, 'sub_cat' : 1}, function(err,rtn){
     if(err)  throw err;
     res.render('admin/food/add-food', { cat: rtn });
   });
@@ -43,6 +65,7 @@ router.get('/addfood', function(req, res, next) {
 router.get('/foodlist', function(req, res, next) {
   Menu.find({}).populate('category').exec(function(err,rtn){
     if(err) throw err;
+    console.log(rtn);
       res.render('admin/food/food-list', { menu: rtn });
     });
 });
@@ -54,7 +77,7 @@ router.get('/foodCatlist', function(req, res, next) {
   });
 });
 
-router.get('/assignfoodCat', auth, function(req, res, next) {
+router.get('/assignfoodCat', function(req, res, next) {
   res.render('admin/food/assign-foodCat', { title: 'Express' });
 });
 
@@ -80,7 +103,8 @@ router.get('/modify/:id', function(req, res, next) {
   });
 });
 
-router.post('/modify', upload.single('uploadImg'), function(req, res, next) {
+router.post('/modify', upload.single('photo'), function(req, res, next) {
+  console.log('req.file',req.file);
     var update = {
     fname : req.body.fname,
     imgUrl : '/images/uploads/' + req.file.filename,
@@ -92,7 +116,7 @@ router.post('/modify', upload.single('uploadImg'), function(req, res, next) {
   };
     Menu.findByIdAndUpdate(req.body.menu_id, {$set: update}, function(err, menu) {
       if(err) throw (err);
-      res.redirect('/admin/detail/' + menu._id);
+      res.json({id:menu._id,status:true});
     });
   });
 
@@ -103,9 +127,10 @@ router.post('/modify', upload.single('uploadImg'), function(req, res, next) {
     });
   });
 
-router.post('/addfood',upload.single('uploadImg'), function(req, res, next) {
+router.post('/addfood',upload.single('photo'), function(req, res, next) {
   var menu = new Menu();
-  Category.findOne({name : req.body.category},function (err1,rtn1) {
+  console.log('req.file',req.file);
+  Category.findOne({$and:[{main_cat : req.body.main_cat}, {sub_cat: req.body.sub_cat}]},function (err1,rtn1) {
     if(err1) throw err1;
     menu.fname = req.body.fname;
     menu.category = rtn1._id;
@@ -114,16 +139,18 @@ router.post('/addfood',upload.single('uploadImg'), function(req, res, next) {
     menu.brief = req.body.brief;
     menu.description = req.body.description;
     menu.additionalInfo = req.body.additionalInfo;
+    console.log(menu);
     menu.save(function(err,rtn){
       if (err)throw err;
-      res.redirect('/admin/detail/'+rtn._id);
+      res.json({id:rtn._id,status:true});
     });
   });
 });
 
 router.post('/assignfoodCat', function(req, res, next) {
   var category = new Category();
-  category.name = req.body.cat_name;
+  category.main_cat = req.body.main_cat;
+  category.sub_cat = req.body.sub_cat;
   category.save(function(err,rtn){
     if (err)throw err;
     res.redirect('/admin/foodCatlist');
@@ -138,7 +165,7 @@ router.get('/deleteCat/:id', function(req, res, next){
 });
 
 router.post('/duplicateCat', function(req, res, next){
-  Category.findOne({ name: req.body.cat_name}, function(err,rtn){
+  Category.findOne({$and:[{ main_cat: req.body.main_cat}, {sub_cat: req.body.sub_cat}]}, function(err,rtn){
     if(err) throw err;
     if(rtn != null) res.json({ status: false, msg: 'Duplicate category name!!!'});
     else res.json({ status: true });
@@ -221,7 +248,7 @@ router.post('/adminmodify', function (req, res, next) {
   var update = {
     name: req.body.name,
     email: req.body.email,
-    password: req.body.password,
+    password: User.change(req.body.password),
   };
   User.findByIdAndUpdate( req.body.id,{$set: update}, function(err, rtn){
     if (err) throw err;

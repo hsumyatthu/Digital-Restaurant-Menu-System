@@ -34,7 +34,6 @@ router.get('/', function(req, res, next) {
     console.log('////',order);
     res.render('index', { title: 'Express' });
   });
-
 });
 
 router.get('/signin', function(req, res, next) {
@@ -50,6 +49,8 @@ router.post('/signin', function(req, res, next) {
     res.redirect('/signin');
   }else{
     req.session.user = { name: user.name, email: user.emailIn, id: user._id };
+    var user_cookie = {name: user.name, id: user._id, email: user.email };
+    res.cookie('user_cookie', user_cookie);
     res.redirect('/admin');
   }
   });
@@ -80,7 +81,7 @@ router.get('/signout',function (req,res) {
   res.redirect('/');
 });
 
-router.get('/login', auth, function(req, res, next) {
+router.get('/login', function(req, res, next) {
     res.render('commons/login', { title: 'Log In' });
 });
 
@@ -100,7 +101,6 @@ router.post('/login', function(req, res, next) {
 });
 
 router.get('/init', function(req, res, next) {
-  //make model using req.body
   var user = new User();
   user.name = 'Admin';
   user.email = 'admin@gmail.com';

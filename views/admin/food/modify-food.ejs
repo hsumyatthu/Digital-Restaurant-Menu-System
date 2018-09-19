@@ -10,7 +10,7 @@
     <title>Gentelella Alela! | </title>
 
     <!-- Bootstrap -->
-    <link href="/vendor/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
     <link href="/vendor/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
     <!-- NProgress -->
@@ -31,6 +31,7 @@
     <!-- Custom Theme Style -->
 
     <link href="/build/css/custom.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/cropper.css">
   </head>
 
     <% include ../../partial/admin-sidebar.ejs %>
@@ -39,42 +40,42 @@
         <div class="right_col" role="main">
           <div class="">
 
-            <div class="clearfix"></div>
+          <div class="clearfix"></div>
 
-            <div class="row">
-            <div class="col-md-12 col-xs-12">
-                <div class="x_panel">
-                  <div class="x_title">
-                    <h2>Modify Food</h2>
-                    <ul class="nav navbar-right panel_toolbox">
-                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                      </li>
-                      <li><a class="close-link"><i class="fa fa-close"></i></a>
-                      </li>
-                    </ul>
-                    <div class="clearfix"></div>
-                  </div>
-                  <div class="x_content">
-                    <br />
-                    <form class="form-horizontal form-label-left" name="frm" action="/admin/modify" method="post" enctype="multipart/form-data">
-                      <input type="hidden" name="menu_id" value="<%= menu._id %>">
-                      <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Food Name <span class="required">*</span></label>
-                        <div class="col-md-9 col-sm-9 col-xs-12">
-                          <input type="text" class="form-control" name="fname" placeholder="Food Name" value="<%= menu.fname %>">
-                        </div>
+          <div class="row">
+          <div class="col-md-12 col-xs-12">
+            <div class="x_panel">
+              <div class="x_title">
+                <h2>Modify Food</h2>
+                <ul class="nav navbar-right panel_toolbox">
+                  <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                  </li>
+                  <li><a class="close-link"><i class="fa fa-close"></i></a>
+                  </li>
+                </ul>
+                <div class="clearfix"></div>
+              </div>
+                <div class="x_content">
+                  <br />
+                  <form class="form-horizontal form-label-left" name="frm" action="/admin/modify" method="post" enctype="multipart/form-data">
+                    <input type="hidden" name="menu_id" value="<%= menu._id %>">
+                    <div class="form-group">
+                      <label class="control-label col-md-3 col-sm-3 col-xs-12">Food Name <span class="required">*</span></label>
+                      <div class="col-md-9 col-sm-9 col-xs-12">
+                        <input type="text" class="form-control" name="fname" placeholder="Food Name" value="<%= menu.fname %>">
                       </div>
-                      <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Catagories</label>
-                        <div class="col-md-9 col-sm-9 col-xs-12">
-                          <select class="form-control" name="category">
-                            <option value="">Select Category</option>
-                            <% for(var i=0; i< cat.length; i++){%>
-                              <option value="<%= cat[i]._id %>"><%= cat[i].name %></option>
-                          <%  } %>
-                          </select>
-                        </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="control-label col-md-3 col-sm-3 col-xs-12">Catagories</label>
+                      <div class="col-md-9 col-sm-9 col-xs-12">
+                        <select class="form-control" name="category">
+                          <option value="">Select Category</option>
+                          <% for(var i=0; i< cat.length; i++){%>
+                            <option value="<%= cat[i]._id %>"><%= cat[i].name %></option>
+                        <%  } %>
+                        </select>
                       </div>
+                    </div>
                       <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">Price <span class="required">*</span></label>
                         <div class="col-md-9 col-sm-9 col-xs-12">
@@ -85,9 +86,9 @@
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="image">Image <span class="required">*</span></label>
                         <div class="col-md-9 col-sm-9 col-xs-12">
                           <label class="img-label" data-toggle="tooltip" title="Select photo">
-                                  <img class="rounded" id="photo" src="<%=menu.imgUrl%>" alt="Image">
-                                  <input type="file" class="sr-only" id="uploadImg" name="uploadImg" accept="images/*">
-                              </label>
+                            <img class="rounded" id="photo" src="/images/upload.png" alt="Image">
+                            <input type="file" class="sr-only" id="uploadImg" name="uploadImg" accept="images/*">
+                            </label>
                         </div>
                       </div>
 
@@ -107,18 +108,36 @@
 
                       <div class="text-center">
                         <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">
-                          <button type="submit" class="btn btn-lg btn-primary" id="save">Save</button>
+                          <button type="button" class="btn btn-lg btn-primary" id="save">Save</button>
                         </div>
                       </div>
                     </form>
                   </div>
                 </div>
               </div>
-
             </div>
           </div>
         </div>
         <!-- /page content -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog">
+          <div class="modal-dialog modal-lg" role="document">
+           <div class="modal-content">
+             <div class="modal-header">
+               <h4 class="modal-title" id="largeModalLabel">Modal title</h4>
+             </div>
+             <div class="modal-body">
+               <div class="img-container">
+                <img src="/images/upload.png" id="sourceImg" alt="">
+               </div>
+
+             </div>
+             <div class="modal-footer">
+               <button id="crop" type="button" class="btn btn-link waves-effect">Crop</button>
+               <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CLOSE</button>
+             </div>
+           </div>
+         </div>
+      </div>
 
         <!-- footer content -->
           <% include ../../partial/admin-footer.ejs %>
@@ -127,9 +146,9 @@
     </div>
 
     <!-- jQuery -->
-    <script src="/vendor/vendors/jquery/dist/jquery.min.js"></script>
+    <script src="/js/jquery.js"></script>
     <!-- Bootstrap -->
-    <script src="/vendor/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
     <!-- FastClick -->
     <script src="/vendor/vendors/fastclick/lib/fastclick.js"></script>
     <!-- NProgress -->
@@ -159,24 +178,105 @@
     <script src="/vendor/vendors/devbridge-autocomplete/dist/jquery.autocomplete.min.js"></script>
     <!-- starrr -->
     <script src="/vendor/vendors/starrr/dist/starrr.js"></script>
+    <!-- Cropper -->
+
     <!-- Custom Theme Scripts -->
-    <script src="/build/js/custom.min.js"></script>
+    <script src="/build/js/custom.js"></script>
+    <script src="/js/cropper.js"></script>
+    <script src="/js/jquery-cropper.js"></script>
+
   </body>
 
   <script type="text/javascript">
   // jQuery.noConflict();
   $(function() {
-    function readURL(input) {
-      if (input.files && input.files[0]) {
-        var reader = new FileReader();
-        reader.onload = function(e) {
-          $('#photo').attr('src', e.target.result);
+    $.fn.cropper.noConflict();
+    $('[data-toggle="tooltip"]').tooltip();
+    var $modal = $('#exampleModal');
+    var uploadImg = document.getElementById('uploadImg'); // upload file
+    uploadImg.addEventListener('change', function (e) {
+        var files = e.target.files;
+        var done = function (url) {
+          uploadImg.value = '';
+          $('#sourceImg').attr('src', url);
+          $modal.modal('show');
+        };
+        var reader;
+        var file;
+        var url;
+        if (files && files.length > 0) {
+          file = files[0];
+          if (URL) {
+            done(URL.createObjectURL(file));
+          } else if (FileReader) {
+            reader = new FileReader();
+            reader.onload = function (e) {
+              done(reader.result);
+            };
+            reader.readAsDataURL(file);
+          }
         }
-        reader.readAsDataURL(input.files[0]);
+    });
+    console.log($modal);
+    var cropper;
+    var canvas;
+    var sourceImg = document.getElementById('sourceImg');
+    $modal.on('shown.bs.modal', function () {
+      cropper = new Cropper(sourceImg, {
+          aspectRatio: 2 / 3,
+          preview: '.img-preview',
+          viewMode: 1,
+      });
+    }).on('hidden.bs.modal', function () {
+      cropper.destroy();
+      cropper = null;
+    });
+
+    $('#crop').click( function () {
+      $modal.modal('hide');
+      if (cropper) {
+        canvas = cropper.getCroppedCanvas({
+          width: 720,
+          height: 960,
+        });
+        $('#photo').attr('src', canvas.toDataURL() ); // change cropped image
       }
+    });
+    $('#save').click(function(){
+      console.log('click');
+      var data = {fname: $('#fname').val()};
+      if(data.fname == ''){
+        alert('Please add category!');
+        return;
     }
-    $("#uploadImg").change(function() {
-      readURL(this);
+      $.ajax({url: "/admin/duplicatefname", data:data, type:'POST', success: function(result){
+        if(result.status == false){
+          alert(result.msg);
+          $('#fname').val('');
+          $('#fname').focus();
+        }else {
+          canvas.toBlob(function (blob) {
+              var formData = new FormData(document.querySelector('form'));
+              formData.append('photo', blob);
+              $.ajax('/admin/modify', {
+                method: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function (rtn) {
+                    console.log(rtn);
+                    if(rtn.status) location.href = "/admin/detail/"+rtn.id;
+                },
+                error: function (err) {
+                    console.log(err);
+                },
+                complete: function () {
+                    console.log('complate');
+                },
+              });
+            });
+          }
+      }});
     });
   });
 

@@ -57,12 +57,12 @@
               <div class="row">
                 <% for(var i=0; i< menu.length; i++){ %>
                 <div class="clearfix">
-                <div class="col-md-8 col-sm-8 col-xs-10 profile_details">
+                <div class="col-md-6 col-sm-6 col-xs-8 profile_details">
                   <div class="well profile_view">
                     <div class="col-sm-12">
                       <div class="left col-xs-6">
                         <h5 class="name"><strong>Name:</strong> <%= menu[i].fname %></h5>
-                        <h5 class="cat"><strong>Category:</strong> <%= menu[i].category.name %></h5>
+                        <h5 class="cat"><strong>Category:</strong> <%= menu[i].category.sub_cat %></h5>
                         <h5><p><strong>Price:</strong> <%= menu[i].price %> </p></h5>
                         <h5 class="brief"><strong>Brief:</strong> <%= menu[i].brief %></h5>
                         <h5><p><strong>Descirption:</strong> <%= menu[i].description %>  </p></h5>

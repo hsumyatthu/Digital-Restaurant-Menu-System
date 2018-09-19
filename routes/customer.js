@@ -19,7 +19,9 @@ var auth = function(req, res, next) {
 };
 
 router.get('/home', function(req, res, next) {
-  res.render('customer/index2', { title: 'Express' });
+  Menu.find({}).sort({count:-1}).limit(8).exec(function(err, rtn){
+    res.render('customer/index2', { title: 'Express', fav: rtn });
+  });
 });
 
 router.get('/about', function(req, res, next) {
@@ -36,7 +38,8 @@ router.all('/list', function(req, res, next) {
   Menu.find({fname: (params[0]=='')?{$exists:true}:{'$regex':params[0],'$options':'i'}, category: (params[1]=='')?{$exists:true}:params[1]},function(err,rtn){
     if(err) throw err;
     if(req.cookies.cart){
-      console.log('have',req.cookies.cart);
+      console.log('have',req.cookies.cart.length);
+      if(req.cookies.cart==null)console.log('null');
       for(var i in rtn){
         for(var j = 0; j< req.cookies.cart.items.length; j++){
           if(req.cookies.cart.items[j].id == rtn[i]._id){
@@ -142,6 +145,10 @@ router.post('/orderlist', function(req, res, next) {
       count: req.body.ordertol[k].count,
       price: req.body.ordertol[k].price
     });
+    Menu.findByIdAndUpdate(req.body.ordertol[k].id, {$inc:{count:1}}, function(err2, rtn2){
+      if(err2) throw err2;
+      console.log('increase');
+    });
   }
 
   order.save(function(err,rtn){
@@ -155,7 +162,6 @@ router.post('/orderlist', function(req, res, next) {
 });
 
 router.post('/checkout/:id', function (req, res, next) {
-  console.log('call');
   Order.findByIdAndUpdate(req.params.id,{$set:{ status:"01"}},function (err,rtn) {
     if(err) throw err;
     res.json({

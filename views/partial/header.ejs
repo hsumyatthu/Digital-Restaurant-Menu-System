@@ -86,22 +86,25 @@
   <div class="wrap_header_mobile">
     <!-- Logo moblie -->
     <a href="index.html" class="logo-mobile">
-      <img src="/images/icons/logo.png" alt="IMG-LOGO">
+    <h2><span>Restaurant Garden</span></h2>
     </a>
 
     <!-- Button show menu -->
     <div class="btn-show-menu">
+      <span class="topbar-email" id="tname">
+        fashe@example.com
+      </span>&nbsp&nbsp&nbsp
       <!-- Header Icon mobile -->
       <div class="header-icons-mobile">
         <a href="#" class="header-wrapicon1 dis-block">
-          <img src="/images/icons/icon-header-01.png" class="header-icon1" alt="ICON">
+          <img src="/images/icons/002-restaurant.png" class="header-icon1" alt="ICON">
         </a>
 
         <span class="linedivide2"></span>
 
         <div class="header-wrapicon2">
-          <img src="/images/icons/icon-header-02.png" class="header-icon1 js-show-header-dropdown" alt="ICON">
-          <span class="header-icons-noti">0</span>
+          <a href="/customer/cart"><img src="/images/icons/icon-header-02.png" class="header-icon1 js-show-header-dropdown" alt="ICON">
+          <span class="header-icons-noti" id="orderm"></span></a>
 
         </div>
       </div>
@@ -113,20 +116,41 @@
       </div>
     </div>
   </div>
-    <!-- Button show menu -->
+  <!-- Menu Mobile -->
+  <div class="wrap-side-menu" >
+    <nav class="side-menu">
+      <ul class="main_menu">
+
+        <li>
+          <a href="/customer/home"><b>Home</b></a>
+        </li>
+
+        <li>
+          <a href="/customer/list"><b>Menu List</b></a>
+        </li>
+
+        <li>
+          <a href="/customer/about"><b>About</b></a>
+        </li>
+      </ul>
+    </nav>
+  </div>
 </header>
 <script src="/vendor/jquery/jquery-3.2.1.min.js" charset="utf-8"></script>
 <script src="/javascripts/js.cookie.js" charset="utf-8"></script>
 <script type="text/javascript">
   $(function (){
     if(Cookies.get("table_cookie")){
-      console.log('///',$('#tbname'),Cookies.get("table_cookie").substring(2));
+    
       $('#tbname').html(JSON.parse(Cookies.get("table_cookie").substring(2)).name);
+        $('#tname').html(JSON.parse(Cookies.get("table_cookie").substring(2)).name);
     }
     if(Cookies.get('cart')){
       $('#cartNo').html(JSON.parse(Cookies.get('cart').substring(2)).items.length);
+      $('#orderm').html(JSON.parse(Cookies.get('cart').substring(2)).items.length);
     }else{
       $('#cartNo').html(0);
+      $('#orderm').html(0);
     }
 
     var data = "";

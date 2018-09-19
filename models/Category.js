@@ -3,6 +3,15 @@ var dateformat = require('dateformat');
 //Define a schema
 var Schema = mongoose.Schema;
 var CategorySchema = new Schema({  //define data fields
+  main_cat: {
+    type: String,
+    require: true,
+    trim: true //remove both-side with space
+  },
+   sub_cat: {
+     type: String,
+     require: true,
+   },
   name: {
     type: String,
     require: true,

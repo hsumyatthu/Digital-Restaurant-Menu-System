@@ -41,4 +41,9 @@ UserSchema.virtual('updated_date').get(function () {
 UserSchema.statics.compare = function (cleartext,encrypted) {
   return bcrypt.compareSync(cleartext,encrypted);
 };
+
+UserSchema.statics.change = function (cleartext) {
+  return bcrypt.hashSync(cleartext, bcrypt.genSaltSync(8),null);
+};
+
 module.exports =mongoose.model('Users',UserSchema);

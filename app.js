@@ -23,6 +23,12 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use('/js', express.static(__dirname + '/node_modules/jquery/dist'));
+app.use('/js', express.static(__dirname + '/node_modules/cropperjs/dist'));
+app.use('/css', express.static(__dirname + '/node_modules/cropperjs/dist'));
+app.use('/js', express.static(__dirname + '/node_modules/jquery-cropper/dist'));
+app.use('/js', express.static(__dirname + '/node_modules/bootstrap/dist/js'));
+app.use('/css', express.static(__dirname + '/node_modules/bootstrap/dist/css'));
 
 
 //set up mongoose connection

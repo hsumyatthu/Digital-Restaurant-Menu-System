@@ -61,7 +61,8 @@
                 <thead>
                   <tr>
                     <!-- <th>No</th> -->
-                    <th>Name</th>
+                    <th>Main Category</th>
+                    <th>Sub Category</th>
                     <th>Inserted</th>
                     <th>Updated</th>
                     <th>Function</th>
@@ -72,7 +73,8 @@
                   <% for (var i=0; i< cat.length; i++){%>
                     <tr>
                       <!-- <td><%= i+1 %></td> -->
-                      <td><b><%= cat[i].name %></b></td>
+                      <td><b><%= cat[i].main_cat %></b></td>
+                      <td><b><%= cat[i].sub_cat %></b></td>
                       <td><b><%= cat[i].updated_date %></b></td>
                       <td><b><%= cat[i].inserted_date %></b></td>
                       <td><button type="button" onclick="del('<%= cat[i]._id %>')" name="button">Delete</button></td>

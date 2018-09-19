@@ -57,12 +57,31 @@
                   <div class="x_content">
                     <br />
                     <form  data-parsley-validate class="form-horizontal form-label-left" action="/admin/assignfoodCat" name="frm" method="post">
+                      <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="main_cat">Main Category<span class="required">*</span>
+                        </label>
+                        <div class="col-md-4 col-sm-4 col-xs-7">
+                          <select class="select2_group form-control" name="main_cat" id="main_cat">
+                            <option value="">Select Main Categories</option>
+                            <option value="Coffee">Coffee</option>
+                            <option value="Fruit & Jucies">Fruit & Jucies</option>
+                            <option value="Fish">Fish</option>
+                            <option value="Meats">Meats</option>
+                            <option value="Noodels">Noodels</option>
+                            <option value="Rice">Rice</option>
+                            <option value="Snacks">Snacks</option>
+                            <option value="Seafood">Seafood</option>
+                            <option value="Soup">Soup</option>
+                            <option value="Vegetables">Vegetables</option>
+                          </select>
+                        </div>
+                      </div>
 
                       <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="foodCat">Food Category <span class="required">*</span>
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="sub_cat">Food Category <span class="required">*</span>
                         </label>
                         <div class="col-md-4 col-sm-4 col-xs-12">
-                          <input type="text" id="foodCat" required="required" name="cat_name" class="form-control col-md-7 col-xs-12">
+                          <input type="text" id="sub_cat" required="required" name="sub_cat" class="form-control col-md-7 col-xs-12">
                         </div>
                       </div>
 
@@ -127,16 +146,16 @@
   <script type="text/javascript">
     $(function(){
       $('#btnassign').click(function(){
-        var data = {cat_name: $('#foodCat').val()};
-        if(data.cat_name == ''){
+        var data = {main_cat: $('#main_cat').val(), sub_cat: $('#sub_cat').val()};
+        if(data.main_cat == '' || data.sub_cat == ''){
           alert('Please add category!');
           return;
       }
         $.ajax({url: "/admin/duplicateCat", data:data, type:'POST', success: function(result){
           if(result.status == false){
             alert(result.msg);
-            $('#foodCat').val('');
-            $('#foodCat').focus();
+            $('#sub_cat').val('');
+            $('#sub_cat').focus();
           }else {
             frm.submit();
           }
