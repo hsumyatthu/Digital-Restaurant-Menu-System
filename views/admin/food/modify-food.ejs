@@ -65,17 +65,23 @@
                         <input type="text" class="form-control" name="fname" placeholder="Food Name" value="<%= menu.fname %>">
                       </div>
                     </div>
+
                     <div class="form-group">
-                      <label class="control-label col-md-3 col-sm-3 col-xs-12">Catagories</label>
+                      <label class="control-label col-md-3 col-sm-3 col-xs-12">Main Category<span class="required">*</span></label>
                       <div class="col-md-9 col-sm-9 col-xs-12">
-                        <select class="form-control" name="category">
-                          <option value="">Select Category</option>
-                          <% for(var i=0; i< cat.length; i++){%>
-                            <option value="<%= cat[i]._id %>"><%= cat[i].name %></option>
-                        <%  } %>
+                        <select class="form-control" id="main_cat" name="main_cat" required>
                         </select>
                       </div>
                     </div>
+
+                    <div class="form-group">
+                      <label class="control-label col-md-3 col-sm-3 col-xs-12">Sub Category<span class="required">*</span></label>
+                      <div class="col-md-9 col-sm-9 col-xs-12">
+                        <select class="form-control" id="sub_cat" name="sub_cat" required>
+                        </select>
+                      </div>
+                    </div>
+
                       <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">Price <span class="required">*</span></label>
                         <div class="col-md-9 col-sm-9 col-xs-12">
@@ -279,6 +285,30 @@
       }});
     });
   });
+  var categories = [<%- cat %>];
+  addOptions('main_cat', categories);
+  $("#main_cat").on('change', function(){
+    var sub = $.grep( categories, function(n, i){
+      return n.main_cat == $("#main_cat").val();
+    });
+    addOptions('sub_cat', sub);
+  });
+  function addOptions(id, arr){
+    $("#"+id).children().remove();
+    for(var idx in arr){
+      if(idx == 0)$("#"+id).append(new Option('Select' + ((id == 'main_cat')? "Main Category" : "Sub Category"), ''));
+      if(idx == 0 || arr[idx][id] != arr[idx-1][id]){
+        $("#"+id).append(new Option(((id == 'main_cat')? arr[idx][id] : arr[idx][id]),arr[idx][id]));
+      }
+    }
+  }
+  console.log('<%= menu.category.main_cat %>', '<%= menu.sub_cat %>');
+  $('#main_cat').val('<%- menu.category.main_cat %>');
+     var sub = $.grep( categories, function( n) {
+       return n.main_cat == '<%- menu.category.main_cat %>';
+     });
+     addOptions('sub_cat', sub);
+     $('#sub_cat').val('<%- menu.category.sub_cat %>');
 
   </script>
 </html>

@@ -94,10 +94,11 @@ router.get('/detail/:id', function(req, res, next) {
 });
 
 router.get('/modify/:id', function(req, res, next) {
-  Menu.findOne({_id:req.params.id}, function(err, rtn) {
-    if(err) throw err;
-    Category.find(function(err,cat){
-      if(err)  throw err;
+  Category.find({},{'main_cat' : 1, _id : 0, 'sub_cat' : 1 }, function(err,cat){
+    if(err)  throw err;
+  Menu.findOne({_id:req.params.id}).populate('category').exec(function(err2, rtn) {
+    if(err2) throw err2;
+    console.log(rtn);
       res.render('admin/food/modify-food', {menu:rtn, cat:cat});
     });
   });
@@ -105,11 +106,13 @@ router.get('/modify/:id', function(req, res, next) {
 
 router.post('/modify', upload.single('photo'), function(req, res, next) {
   console.log('req.file',req.file);
+  Category.findOne({$and:[{main_cat : req.body.main_cat}, {sub_cat: req.body.sub_cat}]},function (err1,rtn1) {
+    if(err1) throw err1;
     var update = {
     fname : req.body.fname,
     imgUrl : '/images/uploads/' + req.file.filename,
     brief : req.body.brief,
-    category: req.body.category,
+    category: rtn1._id,
     price : Number(req.body.price),
     description : req.body.description,
     additionalInfo : req.body.additionalInfo,
@@ -118,6 +121,7 @@ router.post('/modify', upload.single('photo'), function(req, res, next) {
       if(err) throw (err);
       res.json({id:menu._id,status:true});
     });
+  });
   });
 
   router.get('/delete/:id', function(req, res, next){
@@ -253,6 +257,12 @@ router.post('/adminmodify', function (req, res, next) {
   User.findByIdAndUpdate( req.body.id,{$set: update}, function(err, rtn){
     if (err) throw err;
      res.redirect('/admin');
+  });
+});
+router.post('/today',function (req,res) {
+  Menu.findByIdAndUpdate(req.body.id,{$set:{_id:req.body.id,today:req.body.data}},function (err,rtn) {
+    if(err) throw err;
+    res.json({status:true});
   });
 });
 

@@ -4,3 +4,25 @@
   </div>
   <div class="clearfix"></div>
 </footer>
+<link rel="stylesheet" href="/stylesheets/sweetalert.css">
+<script type="text/javascript" src="/javascripts/sweetalert.min.js"></script>
+<script src="/javascripts/socket.io.js" charset="utf-8"></script>
+<script type="text/javascript">
+
+  var socket = io();
+  console.log(socket);
+  var audio = new Audio('/fire.mp3');
+  socket.on('calling',function (data) {
+    audio.play();
+    swal({
+    title: "Request Bill Payment",
+    text: "Request from Table "+data,
+    type: "success",
+    confirmButtonText: "OK",
+    closeOnConfirm: true
+  },function (isConfirm) {
+    audio.pause();
+
+  });
+});
+</script>

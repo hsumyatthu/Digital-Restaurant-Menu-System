@@ -79,7 +79,13 @@
                   <div class="text-center">
                     <button type="button" class="btn btn-lg btn-primary" id="btnModify">MODIFY</button>&nbsp&nbsp&nbsp
                     <button type="button" class="btn btn-lg btn-danger" id="btnDelete">DELETE</button>&nbsp&nbsp&nbsp
-                    <button type="button" class="btn btn-lg btn-success" id="btnList">Go To List</button>
+                    <button type="button" class="btn btn-lg btn-success" id="btnList">Go To List</button>&nbsp&nbsp&nbsp
+                    <% if(menu.today == '0'){%>
+                      <button type="button" class="btn btn-lg btn-primary" id="btnSp">Today Special</button>
+                    <%}else{%>
+                      <button type="button" class="btn btn-lg btn-warning" id="btnUnsp">Unspecial</button>
+                    <%}%>
+
                   </div>
                 </div>
               </div>
@@ -136,6 +142,35 @@
       $('#btnList').click(function () {
         location.href = '/admin/foodlist';
       });
+
+      $('#btnSp').click(function () {
+        update('1');
+      });
+      $('#btnUnsp').click(function () {
+        update('0');
+      });
+
+      function update(data) {
+        $.post(
+          '/admin/today',
+    		 	{'id': '<%=menu._id%>','data':data,}
+        ).done(function(res){
+    			if(res.status){
+    				swal({
+    					title: "Add to Today Special!!",
+    					text: "successfully Item add",
+    					type: "success",
+    					confirmButtonText: "OK",
+    					closeOnConfirm: false
+    				},
+    				function (isConfirm) {
+    					location.href = '/admin/detail/<%=menu._id%>';
+    				});
+    			}
+    		}).fail(function (err) {
+    			console.log(err.status);
+    		});
+      }
 
     </script>
   </body>

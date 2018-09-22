@@ -20,7 +20,12 @@ var auth = function(req, res, next) {
 
 router.get('/home', function(req, res, next) {
   Menu.find({}).sort({count:-1}).limit(8).exec(function(err, rtn){
-    res.render('customer/index2', { title: 'Express', fav: rtn });
+    if(err) throw err;
+    Menu.find({today:'1'},function (err2,rtn2) {
+      if(err2) throw err2;
+      res.render('customer/index2', { title: 'Express', fav: rtn, today:rtn2 });
+    });
+
   });
 });
 

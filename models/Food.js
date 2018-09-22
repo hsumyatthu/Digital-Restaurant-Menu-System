@@ -23,7 +23,7 @@ var FoodSchema = new Schema({  //define data fields
   },
   today: {
     type: String,
-    default: 0 //0 is nomal 1 is today special
+    default: '0' //0 is nomal 1 is today special
   },
   imgUrl: {
       type: String,
