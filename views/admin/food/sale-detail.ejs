@@ -65,15 +65,15 @@
                                 <% for(var i = 0; i< order.foods.length; i++){%>
                                 <tr>
                                 <td class="text-center"><b><%= order.foods[i].food_id.fname %></b></td>
-                                <td class="text-center"><b><%= order.foods[i].food_id.price %></b></td>
+                                <td class="text-center"><b><%= order.foods[i].food_id.price %>Ks</b></td>
                                 <td class="text-center"><b><%= order.foods[i].count %></b></td>
-                                <td class="text-center"><b><%= order.foods[i].price %></b></td>
+                                <td class="text-center"><b><%= order.foods[i].price %>Ks</b></td>
                                 </tr>
                                 <% } %>
                               </tbody>
                               <tfoot>
                                 <td class="text-center" colspan="3"><b>Total</b></td>
-                                <td class="text-center"><b><%= order.tolprice %></b></td>
+                                <td class="text-center"><b><%= order.tolprice %>Ks</b></td>
                               </tfoot>
                             </table>
                           </div>

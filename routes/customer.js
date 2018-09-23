@@ -88,15 +88,13 @@ router.get('/cart', function(req, res, next){
   if(!req.cookies.cart) { res.render('customer/food/cart', { itemdata: [] });
 }else{
   var keys = [];
-  var prices = [];
   for(var y in req.cookies.cart.items){
     keys.push(req.cookies.cart.items[y].id);
-    prices.push(req.cookies.cart.items[y].price);
   }
   Menu.find({ _id:{ $in: keys}
   }, function(err, rtn){
     if(err) throw err;
-    res.render('customer/food/cart',{ itemdata: rtn, prices: prices});
+    res.render('customer/food/cart',{ itemdata: rtn});
   });
   }
 });

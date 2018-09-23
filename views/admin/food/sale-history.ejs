@@ -67,12 +67,12 @@
                           <td>
                           <% for(var j=0; j< order[i].foods.length; j++){%>
                           <li>Food Name:<b><%= order[i].foods[j].food_id.fname %></b>&nbsp&nbsp&nbsp
-                          Price:<b><%= order[i].foods[j].food_id.price %></b>&nbsp&nbsp&nbsp
+                          Price:<b><%= order[i].foods[j].food_id.price %>Ks</b>&nbsp&nbsp&nbsp
                           Count:<b><%= order[i].foods[j].count %></b></li>
                           <br>
                           <% } %>
                         </td>
-                          <td><b><%= order[i].tolprice %></b></td>
+                          <td><b><%= order[i].tolprice %>Ks</b></td>
                           <td><b><%= order[i].inserted_date %></b></td>
                           <td><b><%= order[i].updated_date %></b></td>
                         </tr>
