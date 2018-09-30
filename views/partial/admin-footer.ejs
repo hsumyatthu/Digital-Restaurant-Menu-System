@@ -12,6 +12,7 @@
   var socket = io();
   console.log(socket);
   var audio = new Audio('/fire.mp3');
+  var audio2 = new Audio('/noti.mp3');
   socket.on('calling',function (data) {
     audio.play();
     swal({
@@ -24,5 +25,18 @@
     audio.pause();
 
   });
+});
+socket.on('notiTo',function (data) {
+  audio2.play();
+  swal({
+  title: "New Order arrived",
+  text: "Order from Table "+data,
+  type: "success",
+  confirmButtonText: "OK",
+  closeOnConfirm: true
+},function (isConfirm) {
+  audio2.pause();
+
+});
 });
 </script>

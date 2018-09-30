@@ -40,7 +40,11 @@ router.all('/list', function(req, res, next) {
   // }
   // if(req.body.keyword)
   console.log(params);
-  Menu.find({fname: (params[0]=='')?{$exists:true}:{'$regex':params[0],'$options':'i'}, category: (params[1]=='')?{$exists:true}:params[1]},function(err,rtn){
+  var count = (Number(req.body.count)-1)*6 || 0;
+  var sort = Number(req.body.sorting) || 1;
+  console.log(count,sort);
+  var query = {fname: (params[0]=='')?{$exists:true}:{'$regex':params[0],'$options':'i'}, category: (params[1]=='')?{$exists:true}:params[1],today: '0'};
+  Menu.find(query).limit(6).skip(count).sort({price:sort}).exec(function(err,rtn){
     if(err) throw err;
     if(req.cookies.cart){
       console.log('have',req.cookies.cart.length);
@@ -55,11 +59,12 @@ router.all('/list', function(req, res, next) {
         }
       }
     }
-    console.log(rtn);
     Category.find(function(err2,rtn2){
       if(err2) throw err2;
-      console.log(rtn2);
-      res.render('customer/food/food-list', { menu: rtn, cat:rtn2});
+      Menu.count(query,function (err3,rtn3) {
+        if(err3) throw err3;
+        res.render('customer/food/food-list', { menu: rtn, cat:rtn2, count:rtn3, dcount: Number(req.body.count), sort:sort, category:params[1], keyword:params[0]});
+      });
     });
   });
 });

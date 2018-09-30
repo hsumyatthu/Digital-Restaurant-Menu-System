@@ -34,6 +34,9 @@ var FoodSchema = new Schema({  //define data fields
       required: true,
       trim: true,
   },
+  day: {
+    type: String,
+  },
   description: {
       type: String,
       required: true,

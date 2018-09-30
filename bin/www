@@ -26,6 +26,9 @@ io.on('connection', function (client) {
   client.on('alert',function (data) {
     io.emit('calling',data);
   });
+  client.on('noti',function (data) {
+    io.emit('notiTo',data);
+  });
 });
 
 /**

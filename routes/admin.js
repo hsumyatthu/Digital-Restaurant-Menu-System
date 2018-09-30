@@ -5,6 +5,7 @@ var User = require('../models/User');
 var Table = require('../models/Table');
 var Order = require('../models/Order');
 var multer = require('multer');
+var timeago = require('node-time-ago');
 var Category = require('../models/Category');
 var flash = require('express-flash');
 var moment = require('moment');
@@ -43,10 +44,17 @@ router.get('/', function(req, res, next) {
               for(var j in sale2){
                 sum2 += sale2[j].tolprice;
               }
-              Menu.find({}).sort({count:-1}).limit(10).exec(function(err6, food){
+              Menu.find({}).sort({count:-1}).limit(5).exec(function(err6, food){
                 if(err6) throw err6;
                 console.log(food);
-                  res.render('admin/index', { title: 'Express',orderC:order, menuC:menuC, saletd: sum, toltable: toltable, saleyl: sum2, top: food});
+                var itcount = 0;
+                Order.aggregate([{ $project : { total : {$sum : "$foods.count"}}}],function (err7,rtn7) {
+                  if(err7) throw err7;
+                  for(var i in rtn7){
+                    itcount += rtn7[i].total;
+                  }
+                  res.render('admin/index', { title: 'Express',orderC:order, menuC:menuC, saletd: sum, toltable: toltable, saleyl: sum2, top: food, itcount:itcount});
+                });
               });
             });
         });
@@ -54,7 +62,22 @@ router.get('/', function(req, res, next) {
     });
   });
 });
-
+router.post('/recOrder',function (req,res) {
+  console.log('callling recOrder');
+  Order.find({status:'00'}).sort({inserted:-1}).limit(5).exec(function (err,rtn) {
+    if(err) throw err;
+    var time =[];
+    console.log(rtn);
+    for(var i in rtn){
+      time.push(timeago(rtn[i].inserted));
+    }
+    if(rtn != null){
+      res.json({order:rtn,status:true,time:time});
+    }else {
+      res.json({status:false});
+    }
+  });
+});
 router.get('/addfood', function(req, res, next) {
   Category.find({},{'main_cat' : 1, _id : 0, 'sub_cat' : 1}, function(err,rtn){
     if(err)  throw err;
@@ -63,11 +86,19 @@ router.get('/addfood', function(req, res, next) {
 });
 
 router.get('/foodlist', function(req, res, next) {
-  Menu.find({}).populate('category').exec(function(err,rtn){
-    if(err) throw err;
-    console.log(rtn);
-      res.render('admin/food/food-list', { menu: rtn });
-    });
+  var p= {
+    currPage: Number(req.query.c)|| 1,
+    start : Number(req.body.start) || 1
+  };
+  Menu.count({today:'0'},function (err2,rtn2) {
+    if(err2) throw err2;
+    console.log('//../',rtn2);
+    Menu.find({today:'0'}).limit(4).skip((p.currPage-1)*4).populate('category').exec(function(err,rtn){
+      if(err) throw err;
+      console.log(rtn);
+        res.render('admin/food/food-list', { menu: rtn, count:rtn2, page:p });
+      });
+  });
 });
 
 router.get('/foodCatlist', function(req, res, next) {
@@ -259,10 +290,18 @@ router.post('/adminmodify', function (req, res, next) {
      res.redirect('/admin');
   });
 });
+
 router.post('/today',function (req,res) {
   Menu.findByIdAndUpdate(req.body.id,{$set:{_id:req.body.id,today:req.body.data}},function (err,rtn) {
     if(err) throw err;
     res.json({status:true});
+  });
+});
+
+router.get('/specialfood', function(req, res, next) {
+  Category.find({},{'main_cat' : 1, _id : 0, 'sub_cat' : 1}, function(err,rtn){
+    if(err)  throw err;
+    res.render('admin/food/add-specialfood', { cat: rtn });
   });
 });
 

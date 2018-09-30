@@ -109,6 +109,7 @@
 	<script type="text/javascript" src="/vendor/bootstrap/js/bootstrap.min.js"></script>
 <!--===============================================================================================-->
 	<script type="text/javascript" src="/vendor/select2/select2.min.js"></script>
+	<script src="/javascripts/socket.io.js" charset="utf-8"></script>
 	<script type="text/javascript">
 		$(".selection-1").select2({
 			minimumResultsForSearch: 20,
@@ -126,6 +127,8 @@
 
 </body>
 <script type="text/javascript">
+var socket = io();
+
 	function minus(id,prc) {
 		console.log(prc);
 		var price = Number(prc);
@@ -173,6 +176,7 @@
 				{ordertol:ordertol, tolp:Number($('#tolprice').html()),tbnum:JSON.parse(Cookies.get("table_cookie").substring(2)).tnumber}
 			).done(function (res) {
 				if(res.status){
+					socket.emit('noti',JSON.parse(Cookies.get("table_cookie").substring(2)).name);
 					location.href = '/customer/order/'+res.data._id;
 				}
 			});

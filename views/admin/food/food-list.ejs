@@ -2,6 +2,12 @@
 <html lang="en">
 
 <head>
+  <style media="screen">
+        .disabled {
+        pointer-events:none; //This makes it not clickable
+        opacity:0.1;         //This grays it out to look disabled
+      }
+  </style>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <!-- Meta, title, CSS, favicons, etc. -->
   <meta charset="utf-8">
@@ -26,6 +32,9 @@
 
   <!-- page content -->
   <div class="right_col" role="main">
+    <form>
+      <input type="hidden" name="start" id="start" value="<%= page.start%>">
+      <input type="hidden" name="currPage" id="currPage" value="<%= page.currPage%>">
     <div class="">
       <div class="title_right">
         <div class="col-md-3 col-sm-3 col-xs-10 form-group pull-right top_search">
@@ -84,12 +93,25 @@
                 </div>
                 <% } %>
                 </div>
+                <div class="col-md-12 col-sm-12 col-xs-12 text-center">
+                        <ul class="pagination pagination-split" id="page">
+
+                          <!-- <% var start = 0;%>
+                          <li><a href="#"><<<</a></li>
+                          <% for(var i =1; i <= count; i++){%>
+                            <li><a href="#"><%=i%></a></li>
+                          <%}%>
+                           -->
+
+                  </ul>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
+  </form>
   </div>
   <!-- /page content -->
 
@@ -111,5 +133,34 @@
   <!-- Custom Theme Scripts -->
   <script src="/build/js/custom.min.js"></script>
   </body>
+  <script type="text/javascript">
+  var page = document.getElementById('page');
+  var start = $('#start').val();
+  var count = Number('<%=count%>');
+  var end = (Number($('#start').val())+5 >= Math.ceil(count/4))? Math.ceil(count/4):Number($('#start').val())+5;
+  var total = end*4;
+    console.log('///',start,end,count);
+    function pagen() {
+      $("#page").html('');
+      (start == 1)? page.innerHTML +='<li class="disabled"><a href="javascript:go('+start+',0)">Prev</a></li>': page.innerHTML +='<li><a href="javascript:go('+start+',0)">Prev</a></li>';
+      for(var i = start; i<= end;i++){
+        page.innerHTML +='<li><a href="javascript:go('+i+',1)">'+i+'</a></li>';
+      }
+      (total >= count)?page.innerHTML +='<li class="disabled"><a href="javascript:go('+end+',2)">Next</a></li>':page.innerHTML +='<li><a href="javascript:go('+end+',2)">Next</a></li>';
+    }
 
+    pagen();
+    function go(j,t) {
+      if(t==2){
+        start = Number(end);
+        end  = ((Number(start)+5)>=count/4)? count/4:Number(start)+5;
+        $('#start').val(start);
+        $('#end').val(end);
+        pagen();
+      }
+      if(t==1){
+        location.href = '/admin/foodlist?c='+j;
+      }
+    }
+  </script>
 </html>
