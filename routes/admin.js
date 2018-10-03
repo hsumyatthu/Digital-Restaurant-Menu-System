@@ -291,17 +291,38 @@ router.post('/adminmodify', function (req, res, next) {
   });
 });
 
-router.post('/today',function (req,res) {
-  Menu.findByIdAndUpdate(req.body.id,{$set:{_id:req.body.id,today:req.body.data}},function (err,rtn) {
-    if(err) throw err;
-    res.json({status:true});
-  });
-});
+// router.post('/today',function (req,res) {
+//   Menu.findByIdAndUpdate(req.body.id,{$set:{_id:req.body.id,today:req.body.data}},function (err,rtn) {
+//     if(err) throw err;
+//     res.json({status:true});
+//   });
+// });
 
 router.get('/specialfood', function(req, res, next) {
   Category.find({},{'main_cat' : 1, _id : 0, 'sub_cat' : 1}, function(err,rtn){
     if(err)  throw err;
     res.render('admin/food/add-specialfood', { cat: rtn });
+  });
+});
+router.post('/specialfood',upload.single('photo'), function(req, res, next) {
+  var menu = new Menu();
+  console.log('req.file',req.file);
+  Category.findOne({$and:[{main_cat : req.body.main_cat}, {sub_cat: req.body.sub_cat}]},function (err1,rtn1) {
+    if(err1) throw err1;
+    menu.fname = req.body.fname;
+    menu.category = rtn1._id;
+    if (req.file) menu.imgUrl = '/images/uploads/' + req.file.filename;
+    menu.price = req.body.price;
+    menu.brief = req.body.brief;
+    menu.day = req.body.day;
+    menu.today = '1';
+    menu.description = req.body.description;
+    menu.additionalInfo = req.body.additionalInfo;
+    console.log('//////;',menu);
+    menu.save(function(err,rtn){
+      if (err)throw err;
+      res.json({id:rtn._id,status:true});
+    });
   });
 });
 
